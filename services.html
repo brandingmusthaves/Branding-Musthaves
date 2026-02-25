@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services — Branding Musthaves</title>
+    <meta name="description"
+        content="Explore all services from Branding Musthaves: Scan & Upgrade, Custom Website Design, Showit Templates, and Template tailored for you.">
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* ─── SERVICES PAGE SPECIFIC ─── */
+        .page-hero {
+            background: var(--dark);
+            padding: 120px 0 70px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 120%, rgba(193, 154, 107, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .page-hero .label {
+            margin-bottom: 28px;
+        }
+
+        .page-hero h1 {
+            font-family: var(--serif);
+            font-size: clamp(48px, 6vw, 80px);
+            font-weight: 500;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: var(--white);
+            margin-bottom: 28px;
+        }
+
+        .page-hero h1 em {
+            color: #c7b9a3;
+            font-style: italic;
+        }
+
+        .page-hero p {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ─── SERVICE CARDS ─── */
+        .services-detail {
+            padding: 72px 0 80px;
+            background: #ffffff;
+        }
+
+        .service-card-block {
+            background: #faf8f4;
+            border-radius: 20px;
+            border: 1px solid rgba(33, 22, 18, 0.12);
+            overflow: hidden;
+            margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            min-height: 340px;
+            position: relative;
+            box-shadow: 0 4px 24px rgba(33, 22, 18, 0.09);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+        }
+
+        /* Accent top line — animates in on hover */
+        .service-card-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #e8834a, #f0a86b);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 20px 20px 0 0;
+            z-index: 2;
+        }
+
+        .service-card-block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 24px 64px rgba(33, 22, 18, 0.14);
+            border-color: rgba(33, 22, 18, 0.18);
+        }
+
+        .service-card-block:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card-block:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Left: main content */
+        .sc-main {
+            padding: 48px 52px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sc-watermark {
+            position: absolute;
+            top: -10px;
+            right: 32px;
+            font-family: var(--serif);
+            font-size: 160px;
+            font-weight: 700;
+            color: rgba(33, 22, 18, 0.04);
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+            transition: color 0.4s ease, transform 0.4s ease;
+            transform-origin: right top;
+        }
+
+        .service-card-block:hover .sc-watermark {
+            color: rgba(33, 22, 18, 0.075);
+            transform: scale(1.06);
+        }
+
+        .sc-top {
+            position: relative;
+            z-index: 1;
+        }
+
+        .sc-label {
+            display: inline-block;
+            font-family: var(--sans);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #c7b9a3;
+            margin-bottom: 16px;
+        }
+
+        .sc-title {
+            font-family: var(--serif);
+            font-size: clamp(28px, 3vw, 40px);
+            font-weight: 500;
+            color: var(--dark);
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+            margin-bottom: 20px;
+        }
+
+        .sc-title em {
+            color: #c7b9a3;
+            font-style: italic;
+        }
+
+        .sc-desc {
+            font-family: var(--sans);
+            font-size: 14px;
+            color: rgba(33, 22, 18, 0.58);
+            line-height: 1.8;
+            max-width: 480px;
+            margin-bottom: 0;
+        }
+
+        .sc-bottom {
+            position: relative;
+            z-index: 1;
+            margin-top: 36px;
+        }
+
+        .sc-bottom .btn-fill {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card-block:hover .sc-bottom .btn-fill {
+            transform: translateX(5px);
+        }
+
+        /* Right: details panel */
+        .sc-panel {
+            background: #ede5d8;
+            border-left: 1px solid rgba(33, 22, 18, 0.10);
+            padding: 40px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: background 0.35s ease;
+        }
+
+        .service-card-block:hover .sc-panel {
+            background: #e5dace;
+        }
+
+        .sc-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sc-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-family: var(--sans);
+            font-size: 13px;
+            color: rgba(33, 22, 18, 0.75);
+            line-height: 1.5;
+        }
+
+        .sc-features li::before {
+            content: '';
+            display: block;
+            width: 5px;
+            height: 5px;
+            min-width: 5px;
+            border-radius: 50%;
+            background: #c7b9a3;
+            margin-top: 6px;
+        }
+
+        .sc-pricing {
+            border-top: 1px solid rgba(33, 22, 18, 0.1);
+            padding-top: 24px;
+        }
+
+        .sc-price {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .sc-duration {
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(33, 22, 18, 0.4);
+        }
+
+        /* ─── CTA STRIP ─── */
+        .services-cta-strip {
+            background: var(--white);
+            padding: 80px 0;
+            text-align: center;
+            border-top: 1px solid rgba(33, 22, 18, 0.08);
+        }
+
+        .services-cta-strip .label {
+            color: rgba(33, 22, 18, 0.45);
+        }
+
+        .services-cta-strip h2 {
+            font-family: var(--serif);
+            font-size: clamp(36px, 4vw, 56px);
+            color: var(--dark);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .services-cta-strip h2 em {
+            color: #8b6f5e;
+            font-style: italic;
+        }
+
+        .services-cta-strip p {
+            color: rgba(33, 22, 18, 0.55);
+            font-size: 16px;
+            max-width: 500px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+        }
+
+        .services-cta-strip .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .services-cta-strip .btn-ghost {
+            color: var(--dark) !important;
+            border-color: rgba(33, 22, 18, 0.3);
+            opacity: 1 !important;
+        }
+
+        .services-cta-strip .btn-ghost:hover {
+            border-color: var(--dark);
+        }
+
+        /* ─── HOW IT WORKS ─── */
+        .how-it-works {
+            background: var(--dark);
+            padding: 80px 0;
+        }
+
+        .how-it-works-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .how-it-works-header h2 {
+            font-family: var(--serif);
+            font-size: clamp(36px, 4vw, 54px);
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .how-it-works-header h2 em {
+            color: #c7b9a3;
+            font-style: italic;
+        }
+
+        .how-it-works-header p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .steps-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-width: 760px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Vertical line connecting all steps */
+        .steps-timeline::before {
+            content: '';
+            position: absolute;
+            left: 27px;
+            top: 10px;
+            bottom: 10px;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 56px 1fr;
+            gap: 32px;
+            padding: 0 0 56px 0;
+            position: relative;
+        }
+
+        .step:last-child {
+            padding-bottom: 0;
+        }
+
+        .step-dot {
+            width: 56px;
+            height: 56px;
+            min-width: 56px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--serif);
+            font-size: 18px;
+            font-weight: 500;
+            color: #c7b9a3;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-body {
+            padding-top: 12px;
+        }
+
+        .step-title {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .step-desc {
+            font-family: var(--sans);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.8;
+            max-width: 540px;
+        }
+
+        .step-tag {
+            display: inline-block;
+            margin-top: 14px;
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #c7b9a3;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Scroll Progress -->
+    <div id="progress-bar"></div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+
+    <!-- ─── NAV ─── -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="index.html" class="nav-logo">
+                    <img src="images/logo.png" alt="Branding Musthaves" class="nav-logo-img" />
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html" data-nl="Home">Home</a></li>
+                    <li><a href="services.html" class="active-link" data-nl="Diensten">Services</a></li>
+                    <li><a href="scanner.html" data-nl="Gratis Scan">Free Scan</a></li>
+                    <li><a href="templates.html" data-nl="Templates">Templates</a></li>
+                    <li><a href="about.html" data-nl="Over Ons">About</a></li>
+                    <li><a href="faq.html" data-nl="FAQ">FAQ</a></li>
+                    <li><a href="contact.html" data-nl="Contact">Contact</a></li>
+                </ul>
+                <div class="nav-right">
+                    <div class="lang-switch">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <span class="lang-divider">|</span>
+                        <button class="lang-btn" data-lang="nl">NL</button>
+                    </div>
+                    <a href="index.html#cta" class="nav-cta" data-nl="Start een Project">Start a Project</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ─── PAGE HERO ─── -->
+    <section class="page-hero">
+        <div class="container">
+            <span class="label reveal" data-nl="Wat Wij Aanbieden">What We Offer</span>
+            <h1 class="reveal reveal-delay-1" data-nl="Alles Wat Jouw <em>Website</em><br>Nodig Heeft">Everything Your
+                <em>Website</em><br>Needs to Succeed
+            </h1>
+            <p class="reveal reveal-delay-2"
+                data-nl="Van een volledige maatwerk website tot een template op maat. Wij hebben een oplossing voor iedere fase van jouw bedrijf.">
+                From full custom builds to tailored templates. We have a solution for every stage of your business.</p>
+        </div>
+    </section>
+
+    <!-- ─── SERVICE DETAILS ─── -->
+    <section class="services-detail">
+        <div class="container">
+
+            <!-- Service 1: Scan & Upgrade -->
+            <div class="service-card-block reveal">
+                <div class="sc-main">
+                    <div class="sc-watermark">01</div>
+                    <div class="sc-top">
+                        <span class="sc-label" data-nl="Website Analyse">Website Audit</span>
+                        <h2 class="sc-title" data-nl="Scan <em>&amp; Upgrade</em>">Scan <em>&amp; Upgrade</em></h2>
+                        <p class="sc-desc"
+                            data-nl="Alles begint met een grondige scan van je huidige website. We brengen de zwakke plekken in kaart en gebruiken die als blauwdruk voor een volledig nieuw digitaal fundament. Je vult ons intakeformulier in om de koers te bepalen, maar als je het fijner vindt, plannen we hiervoor een call in.">
+                            Everything starts with a thorough scan of your current website. We map out the weak spots
+                            and use them as the blueprint for a completely new digital foundation. You fill in our
+                            intake form to set the direction. Prefer a call? We can arrange that too.
+                        </p>
+                    </div>
+                    <div class="sc-bottom" style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+                        <a href="form.html" class="btn-fill" data-nl="Naar Invulformulier &rarr;">Go to Intake Form
+                            &rarr;</a>
+                        <a href="contact.html" class="text-link-amber" data-nl="of Plan een Call In">or Schedule a
+                            Call</a>
+                    </div>
+                </div>
+                <div class="sc-panel">
+                    <ul class="sc-features">
+                        <li data-nl="Website scan &amp; intake als startpunt">Website scan &amp; intake to start</li>
+                        <li data-nl="Keuze: digitaal formulier of een call">Choice: digital form or a call</li>
+                        <li data-nl="Compleet nieuwe website">Completely new website</li>
+                        <li data-nl="3 feedbackrondes inbegrepen">3 feedback rounds included</li>
+                    </ul>
+                    <div class="sc-pricing">
+                        <div class="sc-price" data-nl="Vanaf &euro;&nbsp;2.000">From &euro;&nbsp;2,000</div>
+                        <div class="sc-duration" data-nl="Doorlooptijd: 4&ndash;6 weken">Turnaround: 4&ndash;6 weeks
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 2: Full Custom Design -->
+            <div class="service-card-block reveal">
+                <div class="sc-main">
+                    <div class="sc-watermark">02</div>
+                    <div class="sc-top">
+                        <span class="sc-label" data-nl="100% Op Maat Gebouwd">100% Custom Built</span>
+                        <h2 class="sc-title" data-nl="Full <em>Custom Design</em>">Full <em>Custom Design</em></h2>
+                        <p class="sc-desc"
+                            data-nl="Alles begint met een gedetailleerd intakeformulier, zodat we precies weten hoe je merk eruitziet, wie je doelgroep is en wat je doelen zijn. Vind je het prettiger om dit persoonlijk te bespreken? Dan plannen we een call in. Van daaruit bouwen we een volledig op maat gemaakte website vanaf een leeg canvas.">
+                            Everything starts with a detailed intake form, so we know exactly how your brand looks, who
+                            your audience is, and what your goals are. Prefer to discuss this personally? We can
+                            schedule a call. From there, we build a fully bespoke website from a blank canvas.
+                        </p>
+                    </div>
+                    <div class="sc-bottom" style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+                        <a href="form.html" class="btn-fill" data-nl="Naar Invulformulier &rarr;">Go to Intake Form
+                            &rarr;</a>
+                        <a href="contact.html" class="text-link-amber" data-nl="of Plan een Call In">or Schedule a
+                            Call</a>
+                    </div>
+                </div>
+                <div class="sc-panel">
+                    <ul class="sc-features">
+                        <li data-nl="Start met een uitgebreid intakeformulier">Starts with a detailed intake form</li>
+                        <li data-nl="Keuze: digitaal formulier of een call">Choice: digital form or a call</li>
+                        <li data-nl="Uniek ontwerp, volledig op maat gemaakt">Unique design, built from scratch</li>
+                        <li data-nl="3 feedbackrondes inbegrepen">3 feedback rounds included</li>
+                    </ul>
+                    <div class="sc-pricing">
+                        <div class="sc-price" data-nl="Vanaf &euro;&nbsp;2.000">From &euro;&nbsp;2,000</div>
+                        <div class="sc-duration" data-nl="Doorlooptijd: 4&ndash;6 weken">Turnaround: 4&ndash;6 weeks
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 3: Template Customization -->
+            <div class="service-card-block reveal">
+                <div class="sc-main">
+                    <div class="sc-watermark">03</div>
+                    <div class="sc-top">
+                        <span class="sc-label" data-nl="Template Personalisatie">Template Customization</span>
+                        <h2 class="sc-title" data-nl="Template <em>Customization</em>">Template <em>Customization</em>
+                        </h2>
+                        <p class="sc-desc"
+                            data-nl="Alles begint met de keuze voor een van onze high-end templates en een kort personalisatieformulier. Wil je je wensen liever kort telefonisch toelichten? Dan is een call uiteraard ook mogelijk. Wij implementeren jouw branding, teksten en beelden in het bestaande frame voor een snelle, luxe lancering.">
+                            Everything starts with choosing one of our high-end templates and a short personalisation
+                            form. Prefer to briefly explain your wishes over the phone? A call is of course possible
+                            too. We implement your branding, copy, and imagery into the existing frame for a fast,
+                            premium launch.
+                        </p>
+                    </div>
+                    <div class="sc-bottom" style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+                        <a href="form.html" class="btn-fill" data-nl="Naar Invulformulier &rarr;">Go to Intake Form
+                            &rarr;</a>
+                        <a href="contact.html" class="text-link-amber" data-nl="of Plan een Call In">or Schedule a
+                            Call</a>
+                    </div>
+                </div>
+                <div class="sc-panel">
+                    <ul class="sc-features">
+                        <li data-nl="Start met een template-keuze &amp; formulier">Starts with a template choice &amp;
+                            form</li>
+                        <li data-nl="Keuze: digitaal formulier of een call">Choice: digital form or a call</li>
+                        <li data-nl="Bestaand frame, volledig gepersonaliseerd">Existing frame, fully personalised</li>
+                        <li data-nl="2 feedbackrondes inbegrepen">2 feedback rounds included</li>
+                    </ul>
+                    <div class="sc-pricing">
+                        <div class="sc-price" data-nl="Vanaf &euro;&nbsp;950">From &euro;&nbsp;950</div>
+                        <div class="sc-duration" data-nl="Doorlooptijd: 1&ndash;2 weken">Turnaround: 1&ndash;2 weeks
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ─── HOW IT WORKS ─── -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="how-it-works-header">
+                <span class="label reveal" data-nl="Ons Werkproces">Our Process</span>
+                <h2 class="reveal reveal-delay-1" data-nl="Zo Werken Wij <em>Samen</em>">How We <em>Work Together</em>
+                </h2>
+                <p class="reveal reveal-delay-2"
+                    data-nl="Elk project begint met een uitgebreid formulier. Elk project eindigt met een website die werkt. Dit zijn de stappen daartussenin.">
+                    Every project starts with a detailed form. Every project ends with a website that works. Here's
+                    what happens in between.</p>
+            </div>
+
+            <div class="steps-timeline">
+
+                <div class="step reveal">
+                    <div class="step-dot">1</div>
+                    <div class="step-body">
+                        <h3 class="step-title" data-nl="Intakeformulier: alles zwart op wit">Intake Form: everything in
+                            writing</h3>
+                        <p class="step-desc"
+                            data-nl="Alles begint met een uitgebreid intakeformulier. U vult in hoe uw merk eruitziet, wie uw doelgroep is, wat uw stijlvoorkeur is en wat uw website moet bereiken. Zo heb ik direct alles zwart op wit en kan ik meteen gericht aan de slag. Liever persoonlijk contact? Dan plannen we een call in. Beide opties werken prima.">
+                            Everything starts with a detailed intake form. You fill in how your brand looks, who your
+                            audience is, what your style preference is, and what your website needs to achieve. This way
+                            I have everything in writing and can hit the ground running. Prefer a personal conversation?
+                            We can schedule a call instead. Either option works perfectly.</p>
+                        <span class="step-tag" data-nl="Direct na aanmelding">Right after sign-up</span>
+                    </div>
+                </div>
+
+                <div class="step reveal">
+                    <div class="step-dot">2</div>
+                    <div class="step-body">
+                        <h3 class="step-title" data-nl="Strategie &amp; Voorstel">Strategy &amp; Proposal</h3>
+                        <p class="step-desc"
+                            data-nl="Op basis van het formulier (of gesprek) stel ik een helder voorstel op: scope, tijdlijn, prijs en aanpak. U weet precies wat u krijgt, wanneer u het krijgt en wat het kost. Zodra u akkoord geeft, gaan we direct van start.">
+                            Based on your form (or call), I put together a clear proposal: scope, timeline, price, and
+                            approach. You know exactly what you're getting, when you'll get it, and what it costs. Once
+                            you approve, we get started immediately.</p>
+                        <span class="step-tag" data-nl="Week 1">Week 1</span>
+                    </div>
+                </div>
+
+                <div class="step reveal">
+                    <div class="step-dot">3</div>
+                    <div class="step-body">
+                        <h3 class="step-title" data-nl="Ontwerp &amp; Ontwikkeling">Design &amp; Development</h3>
+                        <p class="step-desc"
+                            data-nl="Ik ga aan de slag, volledig op basis van uw intakeformulier en de vastgelegde strategie. Bij Custom Design heeft u 3 feedbackmomenten; bij Template op Maat heeft u 2 feedbackmomenten. U ontvangt tussentijdse updates zodat u altijd weet waar we staan.">
+                            I get to work, entirely based on your intake form and agreed strategy. For Custom Design
+                            you get <strong style="color:rgba(255,255,255,0.85)">3 feedback rounds</strong>; for
+                            Template Tailored you get <strong style="color:rgba(255,255,255,0.85)">2 feedback
+                                rounds</strong>. You receive progress updates so you always know where we stand.</p>
+                        <span class="step-tag" data-nl="Week 2–6">Week 2–6</span>
+                    </div>
+                </div>
+
+                <div class="step reveal">
+                    <div class="step-dot">4</div>
+                    <div class="step-body">
+                        <h3 class="step-title" data-nl="Review &amp; Verfijning">Review &amp; Refinement</h3>
+                        <p class="step-desc"
+                            data-nl="U bekijkt het ontwerp en geeft feedback. Ik verwerk uw opmerkingen nauwkeurig en verfijn het ontwerp totdat alles precies aanvoelt zoals u het voor ogen had: van de tekst tot de knoppen tot de mobiele weergave.">
+                            You review the design and share your feedback. I incorporate your notes carefully and refine
+                            until everything feels exactly as you envisioned: from the copy to the buttons to the
+                            mobile view.</p>
+                        <span class="step-tag" data-nl="Week 5–7">Week 5–7</span>
+                    </div>
+                </div>
+
+                <div class="step reveal">
+                    <div class="step-dot">5</div>
+                    <div class="step-body">
+                        <h3 class="step-title" data-nl="Definitieve Goedkeuring">Final Approval</h3>
+                        <p class="step-desc"
+                            data-nl="Na de laatste verfijning controleren we alles samen: tekst, links, mobiele weergave en laadsnelheid. U geeft de definitieve goedkeuring. Pas als u 100% tevreden bent, gaan we live.">
+                            After the final refinement we review everything together: copy, links, mobile view, and load
+                            speed. You give your final approval. We only go live when you are 100% satisfied.</p>
+                        <span class="step-tag" data-nl="Week 7–8">Week 7–8</span>
+                    </div>
+                </div>
+
+                <div class="step reveal">
+                    <div class="step-dot">6</div>
+                    <div class="step-body">
+                        <h3 class="step-title" data-nl="Lancering 🚀">Launch 🚀</h3>
+                        <p class="step-desc"
+                            data-nl="Uw website gaat live. Ik doe de technische controles, zorg voor een soepele overdracht en ben beschikbaar voor vragen in de eerste weken na de lancering.">
+                            Your website goes live. I handle the technical checks, ensure a smooth handover, and remain
+                            available for any questions in the first weeks after launch.</p>
+                        <span class="step-tag" data-nl="Week 8">Week 8</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── CTA STRIP ─── -->
+    <section class="services-cta-strip">
+        <div class="container">
+            <span class="label reveal" data-nl="Klaar Om Te Starten?">Ready to Begin?</span>
+            <h2 class="reveal reveal-delay-1" data-nl="Weet Niet Welke Optie?<br><em>Wij Helpen Je Kiezen.</em>">Not
+                Sure Which Service?<br><em>We'll Help You Choose.</em></h2>
+            <p class="reveal reveal-delay-2"
+                data-nl="Plan een gratis strategiegesprek. Wij beluisteren uw situatie en adviseren de beste route naar een website die daadwerkelijk converteert.">
+                Book a free strategy call. We'll listen to your situation and advise the best route to a website that
+                actually converts.</p>
+            <div class="btn-group reveal reveal-delay-3">
+                <a href="index.html#cta" class="btn-fill" data-nl="Start een Project">Start a Project</a>
+                <a href="index.html#scanner" class="btn-ghost" data-nl="Gratis Scan Aanvragen">Get a Free Scan</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── FOOTER ─── -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand"><a href="index.html"><img src="images/logo.png" alt="Branding Musthaves"
+                            class="footer-logo-img" /></a>
+                    <p class="footer-desc"
+                        data-nl="Premium webdesign voor merken die<br>helderheid, autoriteit en resultaat eisen.">
+                        Premium web design for brands that<br>demand clarity, authority, and results.
+                    </p>
+                    <span
+                        style="display: block; margin-top: 16px; opacity: 0.6; font-size: 13px; font-family: var(--sans);">KvK-nummer:
+                        99784793</span>
+                </div>
+                <div class="footer-col">
+                    <h4 data-nl="Menu">Menu</h4>
+                    <ul>
+                        <li><a href="index.html" data-nl="Home">Home</a></li>
+                        <li><a href="services.html" data-nl="Diensten">Services</a></li>
+                        <li><a href="scanner.html" data-nl="Gratis Scan">Free Scan</a></li>
+                        <li><a href="templates.html" data-nl="Templates">Templates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 data-nl="Bedrijf">Company</h4>
+                    <ul>
+                        <li><a href="about.html" data-nl="Over Ons">About</a></li>
+                        <li><a href="faq.html" data-nl="FAQ">FAQ</a></li>
+                        <li><a href="contact.html" data-nl="Contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-nl="Netwerk">Connect</h4>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Pinterest</a></li>
+                        <li><a href="#">TikTok</a></li>
+                        <li><a href="mailto:hello@brandingmusthaves.com">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span data-nl="2026 Branding Musthaves. Alle rechten voorbehouden.">2026 Branding Musthaves. All
+                    rights reserved.</span>
+                <span class="footer-legal-links" style="margin-left: auto; display: flex; gap: 24px;">
+                    <a href="terms.html"
+                        style="color: rgba(199,185,163,0.5); text-decoration: none; font-size: 12px; transition: color 0.3s;"
+                        onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(199,185,163,0.5)'"
+                        data-nl="Algemene Voorwaarden">Terms &amp; Conditions</a>
+                    <a href="privacy.html"
+                        style="color: rgba(199,185,163,0.5); text-decoration: none; font-size: 12px; transition: color 0.3s;"
+                        onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(199,185,163,0.5)'"
+                        data-nl="Privacybeleid">Privacy Policy</a>
+                </span>
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="go-top-btn"
+                    aria-label="Go to top">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M5 12l7-7 7 7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
