@@ -561,7 +561,18 @@
                         </div>
 
                         <div class="cf-group"
-                            style="flex-direction: row; align-items: center; gap: 12px; margin-top: 8px;">
+                            style="flex-direction: row; align-items: start; gap: 12px; margin-top: 24px;">
+                            <input type="checkbox" id="careplan" name="Add Website Care Plan" value="Yes"
+                                style="accent-color: var(--amber); transform: scale(1.1); margin-top: 5px;">
+                            <label for="careplan"
+                                style="font-family: var(--sans); font-size: 13.5px; color: rgba(33, 22, 18, 0.9); font-weight: 500; line-height: 1.6;"
+                                data-nl="Ja, voeg het Website Care Plan (&euro;75/mnd) toe. Ik wil dat jullie de hosting, beveiliging en kleine tekst-/fotowijzigingen uit handen nemen.">Yes,
+                                add the Website Care Plan (&euro;75/mo). I want you to manage my hosting, security, and
+                                minor text/image edits.</label>
+                        </div>
+
+                        <div class="cf-group"
+                            style="flex-direction: row; align-items: center; gap: 12px; margin-top: 16px;">
                             <input type="checkbox" id="budget" name="Acknowledged Starting Prices" value="Yes"
                                 style="accent-color: var(--amber); transform: scale(1.1); margin-top: 1px;" required>
                             <label for="budget"
@@ -592,18 +603,18 @@
 
                 <script>
                     const iForm = document.getElementById('myIntakeForm');
-                    if(iForm) {
-                        iForm.addEventListener('submit', async function(e) {
+                    if (iForm) {
+                        iForm.addEventListener('submit', async function (e) {
                             e.preventDefault();
                             const form = e.target;
                             const data = new FormData(form);
                             const btn = form.querySelector('.cf-submit');
                             const originalBtnText = btn.innerHTML;
-                            
+
                             btn.innerHTML = 'Sending...';
                             btn.style.opacity = '0.7';
                             btn.style.pointerEvents = 'none';
-                            
+
                             try {
                                 const response = await fetch(form.action, {
                                     method: form.method,

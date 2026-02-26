@@ -1379,23 +1379,82 @@ footer {
 
     .services-grid,
     .process-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
     }
 
     .footer-grid {
         grid-template-columns: 1fr 1fr;
         gap: 60px;
     }
+
+    .template-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Make inline grids stack horizontally or change ratio on tablet */
+    .service-card-block {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 960px) {
+
+    /* Hero fixes for mobile/tablet */
+    .hero>div {
+        grid-template-columns: 1fr !important;
+    }
+
+    .hero-inner {
+        padding: 160px 40px 100px !important;
+        text-align: center !important;
+        align-items: center !important;
+    }
+
+    .hero h1 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-sub {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-actions {
+        justify-content: center;
+    }
+
+    /* Hide the right-side split image on tablet/mobile so text has full focus */
+    .hero>div>div:nth-child(2) {
+        display: none !important;
+    }
+
+    /* Override inline flex rows on services page to stack */
+    .sc-bottom,
+    .cta-box div[style*="display: flex; gap: 24px"] {
+        justify-content: center;
+    }
+
+    .service-card-block-dark {
+        grid-template-columns: 1fr !important;
+    }
 }
 
 @media (max-width: 768px) {
-    .section-padding {
-        padding: 120px 0;
+    .container {
+        padding: 0 24px;
     }
 
+    section {
+        padding: 80px 0 !important;
+    }
+
+    .services-grid,
+    .process-grid,
     .footer-grid {
         grid-template-columns: 1fr;
+        gap: 40px;
     }
 
     .nav-links {
@@ -1403,6 +1462,100 @@ footer {
     }
 
     .hero-inner {
-        padding: 140px 0 100px;
+        padding: 140px 24px 80px !important;
+    }
+
+    .section-header {
+        margin-bottom: 48px;
+    }
+
+    .section-title,
+    .scanner-title {
+        font-size: clamp(32px, 9vw, 44px) !important;
+        line-height: 1.15;
+    }
+
+    .hero h1 {
+        font-size: clamp(36px, 10vw, 48px) !important;
+    }
+
+    .nav-right {
+        gap: 16px;
+    }
+
+    .nav-cta {
+        padding: 12px 20px;
+        font-size: 11px;
+    }
+
+    .usps-list {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        margin-top: 40px;
+    }
+
+    .usp-tag {
+        text-align: center;
+        padding: 16px 24px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 24px;
+        align-items: flex-start;
+    }
+
+    .footer-legal-links {
+        margin-left: 0 !important;
+    }
+
+    .cta-box {
+        padding: 48px 24px;
+    }
+
+    .cta-box div[style*="gap: 24px"],
+    .sc-bottom,
+    .scanner-form {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 16px !important;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary,
+    .btn-fill,
+    .btn-ghost {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .faq-q {
+        padding: 24px 0;
+        font-size: 15px;
+    }
+
+    /* Override inline flexing on Noelia block */
+    div[style*="flex-wrap: wrap"]>div[style*="width: 240px"] {
+        width: 100% !important;
+        height: 240px !important;
+    }
+
+    div[style*="flex-wrap: wrap"]>div[style*="text-align: right"] {
+        align-items: flex-start !important;
+        text-align: left !important;
+        padding: 0 40px 32px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-logo-img {
+        height: 70px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
     }
 }

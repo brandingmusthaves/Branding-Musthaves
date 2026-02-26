@@ -103,6 +103,99 @@
             margin-bottom: 0;
         }
 
+        /* ─── DARK THEME SUBSCRIPTION BLOCK ─── */
+        .service-card-block-dark {
+            background: var(--dark);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+            margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            min-height: 340px;
+            position: relative;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+        }
+
+        .service-card-block-dark::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #c7b9a3, #e5dace);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 20px 20px 0 0;
+            z-index: 2;
+        }
+
+        .service-card-block-dark:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .service-card-block-dark:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card-block-dark .sc-watermark {
+            color: rgba(255, 255, 255, 0.03);
+        }
+
+        .service-card-block-dark:hover .sc-watermark {
+            color: rgba(255, 255, 255, 0.06);
+            transform: scale(1.06);
+        }
+
+        .service-card-block-dark .sc-title {
+            color: var(--white);
+        }
+
+        .service-card-block-dark .sc-desc {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .service-card-block-dark .btn-fill {
+            background: #c7b9a3;
+            color: var(--dark);
+            border-color: #c7b9a3;
+        }
+
+        .service-card-block-dark .btn-fill:hover {
+            opacity: 0.9;
+            transform: translateX(5px);
+        }
+
+        .service-card-block-dark .sc-panel {
+            background: rgba(255, 255, 255, 0.04);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .service-card-block-dark:hover .sc-panel {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .service-card-block-dark .sc-features li {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .service-card-block-dark .sc-pricing {
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .service-card-block-dark .sc-price {
+            color: var(--white);
+        }
+
+        .service-card-block-dark .sc-duration {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
         /* Left: main content */
         .sc-main {
             padding: 48px 52px;
@@ -577,6 +670,44 @@
                         <div class="sc-price" data-nl="Vanaf &euro;&nbsp;950">From &euro;&nbsp;950</div>
                         <div class="sc-duration" data-nl="Doorlooptijd: 1&ndash;2 weken">Turnaround: 1&ndash;2 weeks
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 4: Website Care Plan -->
+            <div class="service-card-block-dark reveal" style="margin-top: 64px;">
+                <div class="sc-main">
+                    <div class="sc-watermark" style="right: auto; left: 40px;">◆</div>
+                    <div class="sc-top">
+                        <span class="sc-label" data-nl="Website Onderhoud & Hosting">Premium Maintenance</span>
+                        <h2 class="sc-title" data-nl="Website <em>Care Plan</em>">Website <em>Care Plan</em></h2>
+                        <p class="sc-desc"
+                            data-nl="Geen technische rompslomp of gedoe. Wij beheren, beveiligen en hosten je website in ons eigen premium systeem. Wil je een tekst- of foto-aanpassing doen? Stuur ons simpelweg een mailtje en wij regelen het binnen 48 uur voor je. Blijf gefocust op jouw bedrijf, terwijl je website altijd state-of-the-art blijft.<br><br><em>Je kunt deze service direct als extra optie aanvinken in ons intakeformulier, of geef het gewoon even aan tijdens onze kennismakingscall!</em>">
+                            No technical hassles or hosting headaches. We manage, secure, and host your website in
+                            our premium system. Need to quickly swap an image or update some text? Simply shoot us
+                            an email and we handle it for you within 48 hours. Focus entirely on your business while
+                            we keep your website state-of-the-art.<br><br><em>You can simply select this service as an
+                                add-on in our intake form, or just let us know during our discovery call!</em>
+                        </p>
+                    </div>
+                    <div class="sc-bottom" style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+                        <a href="contact.html" class="btn-fill" data-nl="Meld Je Aan &rarr;">Sign Up Now &rarr;</a>
+                        <a href="faq.html" class="text-link-amber" data-nl="Lees de veelgestelde vragen"
+                            style="color: #c7b9a3 !important;">Read our
+                            FAQ</a>
+                    </div>
+                </div>
+                <div class="sc-panel">
+                    <ul class="sc-features">
+                        <li data-nl="Premium razendsnelle webhosting">Premium ultra-fast web hosting</li>
+                        <li data-nl="Kleine aanpassingen doen wij voor jou">We handle all minor edit requests</li>
+                        <li data-nl="Volledig beheer, backups & beveiliging">Full management, backups & security
+                        </li>
+                        <li data-nl="Zonder gedoe, maandelijks opzegbaar">No hassle, cancel anytime</li>
+                    </ul>
+                    <div class="sc-pricing">
+                        <div class="sc-price" data-nl="&euro;&nbsp;75 / mnd">&euro;&nbsp;75 / month</div>
+                        <div class="sc-duration" data-nl="Facturatie via automatische incasso">Billed monthly</div>
                     </div>
                 </div>
             </div>
