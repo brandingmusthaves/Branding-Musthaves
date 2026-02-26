@@ -1523,7 +1523,8 @@ footer {
     }
 
     .hero-inner {
-        padding: 160px 40px 100px !important;
+        padding: 120px 40px 100px !important;
+        /* Pushed up (was 160px) */
         text-align: center !important;
         align-items: center !important;
     }
@@ -1589,7 +1590,8 @@ footer {
     }
 
     .hero h1 {
-        font-size: clamp(36px, 10vw, 48px) !important;
+        font-size: clamp(42px, 12vw, 56px) !important;
+        /* Increased mobile size */
     }
 
     .nav-right {
