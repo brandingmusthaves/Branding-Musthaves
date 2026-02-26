@@ -159,3 +159,28 @@ langButtons.forEach(btn => {
         });
     });
 });
+
+/* ─── HAMBURGER MENU ─────────────────────── */
+const hamburgerBtns = document.querySelectorAll('.hamburger-btn');
+const navLinksContainer = document.querySelector('.nav-links');
+
+if (hamburgerBtns.length > 0 && navLinksContainer) {
+    hamburgerBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            navLinksContainer.classList.toggle('active');
+            // Prevent scrolling on body when menu is open
+            document.body.style.overflow = navLinksContainer.classList.contains('active') ? 'hidden' : '';
+        });
+    });
+
+    // Close menu when clicking a link
+    const navItems = navLinksContainer.querySelectorAll('a');
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            hamburgerBtns.forEach(b => b.classList.remove('active'));
+            navLinksContainer.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+}

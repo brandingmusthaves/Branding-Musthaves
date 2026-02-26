@@ -331,6 +331,67 @@ header.scrolled .nav-cta {
     transform: scale(1.05);
 }
 
+/* ─── HAMBURGER MENU ─── */
+.hamburger-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+    /* Above mobile dropdown */
+    width: 30px;
+    height: 20px;
+    position: relative;
+    margin-left: 12px;
+}
+
+.hamburger-btn span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--white);
+    position: absolute;
+    left: 0;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+header.scrolled .hamburger-btn span {
+    background: var(--dark);
+}
+
+.hamburger-btn span:nth-child(1) {
+    top: 0;
+}
+
+.hamburger-btn span:nth-child(2) {
+    top: 9px;
+}
+
+.hamburger-btn span:nth-child(3) {
+    top: 18px;
+}
+
+/* Hamburger Active State (X) */
+.hamburger-btn.active span:nth-child(1) {
+    transform: rotate(45deg);
+    top: 9px;
+}
+
+.hamburger-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-btn.active span:nth-child(3) {
+    transform: rotate(-45deg);
+    top: 9px;
+}
+
+/* Ensure hamburger icon is white when menu is open */
+header .hamburger-btn.active span {
+    background: var(--white) !important;
+}
+
 /* ─── HERO ───────────────────────────────── */
 .hero {
     position: relative;
@@ -1457,8 +1518,48 @@ footer {
         gap: 40px;
     }
 
+    .hamburger-btn {
+        display: block;
+    }
+
     .nav-links {
-        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100vh;
+        background: var(--dark);
+        display: flex;
+        /* Override previous none */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s var(--ease-out);
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-links.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .nav-links a {
+        font-size: 28px;
+        color: var(--white) !important;
+        font-family: var(--serif);
+        text-transform: none;
+        letter-spacing: 0;
+    }
+
+    .nav-links a:hover {
+        color: var(--amber) !important;
     }
 
     .hero-inner {
