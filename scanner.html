@@ -4,10 +4,58 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Free Website Scan — Branding Musthaves</title>
+    <title>Free Website Scan - Branding Musthaves</title>
     <meta name="description"
         content="Get a free, personal video review of your website. We analyze your design, messaging, and conversion potential without any strings attached.">
     <link rel="stylesheet" href="style.css" />
+    <style>
+        /* ─── SCANNER RESPONSIVENESS ─── */
+        @media (max-width: 960px) {
+            .services-grid[style*="grid-template-columns: repeat(3, 1fr)"] {
+                grid-template-columns: 1fr !important;
+                gap: 24px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-dark[style*="padding: 160px"] {
+                padding: 120px 24px 60px !important;
+            }
+
+            .section-cream[style*="padding: 80px"] {
+                padding: 60px 24px !important;
+            }
+
+            div[style*="gap: 40px; justify-content: center; flex-wrap: wrap;"] {
+                flex-direction: column !important;
+                gap: 16px !important;
+                align-items: center;
+            }
+
+            .scanner-form.reveal input {
+                width: 100% !important;
+            }
+
+            .scanner-form.reveal button {
+                width: 100% !important;
+                justify-content: center;
+            }
+
+            .scanner-form.reveal {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                width: 100% !important;
+            }
+
+            h1[style*="clamp(40px, 5vw, 68px)"] {
+                font-size: clamp(36px, 10vw, 48px) !important;
+            }
+
+            .section-cream h2[style*="clamp(32px"] {
+                font-size: clamp(28px, 8vw, 36px) !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -60,7 +108,7 @@
             <p style="font-family: var(--sans); font-size: 16px; color: rgba(199,185,163,0.6); line-height: 1.8; margin-bottom: 48px;"
                 class="reveal reveal-delay-1"
                 data-nl="Een premium website is geen kostenpost, het is je krachtigste verkoopmedewerker. Ontvang een gratis, persoonlijke teardown-video. Ontdek exact waar je nu omzet laat liggen en hoe een strategisch Webdesign van Branding Musthaves zichzelf meervoudig terugverdient.">
-                A premium website isn't an expense—it's your most powerful sales asset. Get a free, personalized
+                A premium website isn't an expense, it's your most powerful sales asset. Get a free, personalized
                 teardown video. Discover exactly where you're leaving money on the table, and how a strategic web design
                 from Branding Musthaves pays for itself.
             </p>
@@ -348,8 +396,8 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                &copy; <span data-nl="2026 Branding Musthaves. Alle rechten voorbehouden.">2026 Branding Musthaves. All
-                    rights reserved.</span>
+                <span class="footer-copyright">&copy; <span data-nl="2026 Branding Musthaves. Alle rechten voorbehouden.">2026 Branding Musthaves. All
+                    rights reserved.</span></span>
                 <span class="footer-legal-links" style="margin-left: auto; display: flex; gap: 24px;">
                     <a href="terms.html"
                         style="color: rgba(199,185,163,0.5); text-decoration: none; font-size: 12px; transition: color 0.3s;"

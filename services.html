@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Services — Branding Musthaves</title>
+    <title>Services - Branding Musthaves</title>
     <meta name="description"
         content="Explore all services from Branding Musthaves: Scan & Upgrade, Custom Website Design, Showit Templates, and Template tailored for you.">
     <link rel="stylesheet" href="style.css" />
@@ -73,7 +73,7 @@
             transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
         }
 
-        /* Accent top line — animates in on hover */
+        /* Accent top line - animates in on hover */
         .service-card-block::before {
             content: '';
             position: absolute;
@@ -508,6 +508,105 @@
             color: #c7b9a3;
             opacity: 0.8;
         }
+
+        /* ─── RESPONSIVE SERVICES ─── */
+        @media (max-width: 960px) {
+
+            .service-card-block,
+            .service-card-block-dark {
+                grid-template-columns: 1fr !important;
+            }
+
+            .sc-main {
+                padding: 40px;
+            }
+
+            .sc-panel {
+                padding: 32px 40px;
+                border-left: none;
+                border-top: 1px solid rgba(33, 22, 18, 0.10);
+            }
+
+            .service-card-block-dark .sc-panel {
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .sc-bottom {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 16px !important;
+            }
+
+            .sc-bottom .btn-fill {
+                justify-content: center;
+                /* Removed width: 100% to make the button normal width */
+            }
+
+            /* Removed text-align: center from text-link-amber to let it default to left */
+        }
+
+        @media (max-width: 768px) {
+            .page-hero {
+                padding: 100px 24px 60px;
+            }
+
+            .sc-main {
+                padding: 32px 24px;
+            }
+
+            .sc-panel {
+                padding: 24px;
+            }
+
+            .sc-title {
+                font-size: clamp(26px, 7vw, 32px);
+            }
+
+            .sc-watermark {
+                font-size: 100px;
+                right: 16px;
+                top: -5px;
+            }
+
+            .services-cta-strip {
+                padding: 60px 24px;
+            }
+
+            .services-cta-strip .btn-group {
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+            }
+
+            .how-it-works-header {
+                margin-bottom: 60px;
+            }
+
+            .step {
+                gap: 16px;
+                padding: 0 0 40px 0;
+            }
+
+            .step-dot {
+                width: 44px;
+                height: 44px;
+                min-width: 44px;
+                font-size: 15px;
+            }
+
+            .steps-timeline::before {
+                left: 21px;
+                /* Center of the 44px dot */
+            }
+
+            .step-title {
+                font-size: 18px;
+            }
+
+            .step-desc {
+                font-size: 13.5px;
+            }
+        }
     </style>
 </head>
 
@@ -876,8 +975,8 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                &copy; <span data-nl="2026 Branding Musthaves. Alle rechten voorbehouden.">2026 Branding Musthaves. All
-                    rights reserved.</span>
+                <span class="footer-copyright">&copy; <span data-nl="2026 Branding Musthaves. Alle rechten voorbehouden.">2026 Branding Musthaves. All
+                    rights reserved.</span></span>
                 <span class="footer-legal-links" style="margin-left: auto; display: flex; gap: 24px;">
                     <a href="terms.html"
                         style="color: rgba(199,185,163,0.5); text-decoration: none; font-size: 12px; transition: color 0.3s;"

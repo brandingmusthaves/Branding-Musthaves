@@ -492,15 +492,16 @@ header .hamburger-btn.active span {
 .btn-hero-primary {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    padding: 14px 26px;
+    gap: 10px;
+    padding: 14px 28px;
     background: var(--amber);
     color: var(--dark);
     font-family: var(--sans);
     font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
     border: none;
     transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
 }
@@ -514,15 +515,16 @@ header .hamburger-btn.active span {
 .btn-hero-secondary {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    padding: 14px 26px;
+    gap: 10px;
+    padding: 14px 28px;
     background: transparent;
     color: rgba(199, 185, 163, 0.7);
     font-family: var(--sans);
     font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.05em;
-    border-radius: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
     border: 1px solid rgba(199, 185, 163, 0.2);
     transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.2s;
 }
@@ -549,17 +551,19 @@ header .hamburger-btn.active span {
 .btn-outline-dark {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    padding: 14px 26px;
+    gap: 10px;
+    padding: 14px 28px;
     background: transparent;
     color: var(--dark);
     font-family: var(--sans);
     font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.05em;
-    border-radius: 10px;
-    border: 1px solid rgba(33, 22, 18, 0.2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid rgba(33, 22, 18, 0.2);
     transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+    text-decoration: none;
 }
 
 .btn-outline-dark:hover {
@@ -578,6 +582,7 @@ header .hamburger-btn.active span {
     padding: 14px 28px;
     background: var(--beige);
     color: var(--dark);
+    font-family: var(--sans);
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -600,6 +605,7 @@ header .hamburger-btn.active span {
     align-items: center;
     gap: 10px;
     padding: 14px 28px;
+    font-family: var(--sans);
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -616,28 +622,7 @@ header .hamburger-btn.active span {
     transform: translateY(-2px);
 }
 
-/* Outline dark for light backgrounds */
-.btn-outline-dark {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 28px;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--dark);
-    border: 1.5px solid rgba(33, 22, 18, 0.2);
-    border-radius: var(--radius-sm);
-    transition: all 0.3s var(--ease-out);
-    text-decoration: none;
-}
-
-.btn-outline-dark:hover {
-    border-color: var(--dark);
-    background: transparent;
-    transform: translateY(-2px);
-}
+/* Remove duplicated .btn-outline-dark and .btn-outline-dark:hover lines since they conflict with 549 */
 
 /* Plain orange text link */
 .text-link-amber {
@@ -1040,6 +1025,19 @@ header .hamburger-btn.active span {
     max-width: 680px;
     line-height: 1.6;
     margin-bottom: 48px;
+}
+
+.scanner-features {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    font-family: var(--sans);
+    font-size: 12px;
+    color: rgba(199, 185, 163, 0.5);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .scanner-form {
@@ -1525,22 +1523,22 @@ footer {
     .hero-inner {
         padding: 120px 40px 100px !important;
         /* Pushed up (was 160px) */
-        text-align: center !important;
-        align-items: center !important;
+        text-align: left !important;
+        align-items: flex-start !important;
     }
 
     .hero h1 {
-        margin-left: auto;
-        margin-right: auto;
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .hero-sub {
-        margin-left: auto;
-        margin-right: auto;
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .hero-actions {
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     /* Hide the right-side split image on tablet/mobile so text has full focus */
@@ -1576,7 +1574,7 @@ footer {
     }
 
     .hero-inner {
-        padding: 140px 24px 80px !important;
+        padding: 100px 24px 60px !important;
     }
 
     .section-header {
@@ -1616,33 +1614,75 @@ footer {
     }
 
     .footer-bottom {
-        flex-direction: column;
+        flex-direction: column-reverse;
+        /* Switch order to bring button down */
         gap: 24px;
-        align-items: flex-start;
+        align-items: center;
+        /* Center the bottom lines on mobile */
+        text-align: center;
+        padding-top: 32px;
     }
 
     .footer-legal-links {
         margin-left: 0 !important;
+        flex-direction: column;
+        gap: 12px !important;
+    }
+
+    .go-top-btn {
+        margin-left: 0;
+        margin-bottom: 16px;
     }
 
     .cta-box {
         padding: 48px 24px;
+        text-align: center;
     }
 
+    .cta-box p,
+    .scanner-desc {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .scanner-card {
+        text-align: center;
+        align-items: center;
+    }
+
+    .scanner-features {
+        justify-content: center;
+        gap: 16px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cta-buttons-wrapper,
     .cta-box div[style*="gap: 24px"],
     .sc-bottom,
     .scanner-form {
         flex-direction: column !important;
-        align-items: stretch !important;
+        align-items: center !important;
         gap: 16px !important;
+        width: 100%;
+    }
+
+    .scanner-input,
+    .scanner-btn-new,
+    .scanner-form button {
+        width: 100% !important;
+        justify-content: center;
     }
 
     .btn-hero-primary,
     .btn-hero-secondary,
     .btn-fill,
-    .btn-ghost {
-        justify-content: center;
-        width: 100%;
+    .btn-ghost,
+    .btn-outline-dark,
+    .btn-amber {
+        padding: 10px 18px !important;
+        font-size: 11px !important;
     }
 
     .faq-q {
@@ -1653,13 +1693,13 @@ footer {
     /* Override inline flexing on Noelia block */
     div[style*="flex-wrap: wrap"]>div[style*="width: 240px"] {
         width: 100% !important;
-        height: 240px !important;
+        height: 380px !important;
     }
 
     div[style*="flex-wrap: wrap"]>div[style*="text-align: right"] {
-        align-items: flex-start !important;
-        text-align: left !important;
-        padding: 0 40px 32px !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 32px 24px !important;
     }
 }
 
@@ -1670,8 +1710,8 @@ footer {
 
     .hero-actions {
         flex-direction: column;
-        align-items: stretch;
-        width: 100%;
+        align-items: flex-start;
+        width: auto;
     }
 
     /* On very small mobile screens, the header elements get too crowded */
