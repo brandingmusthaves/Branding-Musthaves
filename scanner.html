@@ -19,7 +19,11 @@
 
         @media (max-width: 768px) {
             .section-dark[style*="padding: 160px"] {
-                padding: 120px 24px 60px !important;
+                padding: 140px 24px 60px !important;
+            }
+
+            .scanner-hero-h1 {
+                font-size: clamp(42px, 12vw, 56px) !important;
             }
 
             .section-cream[style*="padding: 80px"] {
@@ -104,7 +108,8 @@
             <span class="label" style="color: rgba(199,185,163,0.6); margin-bottom: 24px; display: inline-block;"
                 data-nl="Jouw Website Audit">Your Website Audit</span>
             <h1 style="font-family: var(--serif); font-size: clamp(40px, 5vw, 68px); font-weight: 500; color: var(--white); line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.02em;"
-                class="reveal" data-nl="Scan Je Website<br><em>Gratis</em>">Scan Your Website<br><em>For Free</em></h1>
+                class="reveal scanner-hero-h1" data-nl='Scan Je Website<br><em>Gratis</em>'>Scan Your Website<br><em>For
+                    Free</em></h1>
             <p style="font-family: var(--sans); font-size: 16px; color: rgba(199,185,163,0.6); line-height: 1.8; margin-bottom: 48px;"
                 class="reveal reveal-delay-1"
                 data-nl="Een premium website is geen kostenpost, het is je krachtigste verkoopmedewerker. Ontvang een gratis, persoonlijke teardown-video. Ontdek exact waar je nu omzet laat liggen en hoe een strategisch Webdesign van Branding Musthaves zichzelf meervoudig terugverdient.">
@@ -112,13 +117,13 @@
                 teardown video. Discover exactly where you're leaving money on the table, and how a strategic web design
                 from Branding Musthaves pays for itself.
             </p>
-            <form class="scanner-form reveal reveal-delay-2" onsubmit="return false;"
+            <form id="scannerForm" class="scanner-form reveal reveal-delay-2"
                 style="margin: 0 auto; margin-bottom: 60px;">
-                <input class="scanner-input" type="url" placeholder="Enter your website URL..."
+                <input id="scannerUrl" class="scanner-input" type="url" placeholder="Enter your website URL..."
                     data-nl-placeholder="Uw website URL..." required />
-                <input class="scanner-input" type="email" placeholder="Enter your email address..."
+                <input id="scannerEmail" class="scanner-input" type="email" placeholder="Enter your email address..."
                     data-nl-placeholder="Uw e-mailadres..." required />
-                <button type="submit" class="scanner-btn-new" data-nl-text="Scan Aanvragen">
+                <button type="submit" class="scanner-btn-new" data-nl-text="Scan Aanvragen" id="scannerBtn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -126,6 +131,52 @@
                     <span class="btn-text">Request My Scan</span>
                 </button>
             </form>
+            <div id="scannerMessage"
+                style="display:none; text-align: center; margin-top: -30px; margin-bottom: 30px; font-family: var(--sans); font-size: 14px; color: #7ecb8f;">
+                Thank you! Your scan request has been submitted.
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const form = document.getElementById('scannerForm');
+                    const msg = document.getElementById('scannerMessage');
+                    const btn = document.getElementById('scannerBtn');
+
+                    if (form) {
+                        form.addEventListener('submit', async (e) => {
+                            e.preventDefault();
+                            const url = document.getElementById('scannerUrl').value;
+                            const email = document.getElementById('scannerEmail').value;
+
+                            btn.style.opacity = '0.7';
+                            btn.style.pointerEvents = 'none';
+
+                            try {
+                                // Let op: dit checkt nu via jouw eigen API die op de achtergrond draait!
+                                const response = await fetch('http://127.0.0.1:5000/api/scan', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ websiteUrl: url, email: email, language: document.body.classList.contains('lang-nl') ? 'nl' : 'en' })
+                                });
+
+                                if (response.ok) {
+                                    msg.style.display = 'block';
+                                    form.reset();
+                                } else {
+                                    alert('Er ging iets mis. Probeer het opnieuw.');
+                                }
+                            } catch (err) {
+                                alert('Controleer of je backend script / server wel runnend is.');
+                            } finally {
+                                btn.style.opacity = '1';
+                                btn.style.pointerEvents = 'auto';
+                            }
+                        });
+                    }
+                });
+            </script>
 
             <div style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; font-family: var(--sans); font-size: 13px; color: rgba(199,185,163,0.5); letter-spacing: 0.1em; text-transform: uppercase;"
                 class="reveal reveal-delay-2">
@@ -388,16 +439,17 @@
                 <div class="footer-col">
                     <h4 data-nl="Netwerk">Connect</h4>
                     <ul>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">Pinterest</a></li>
-                        <li><a href="#">TikTok</a></li>
+                        <li><a href="https://www.instagram.com/brandingmusthaves/" target="_blank">Instagram</a></li>
+                        <li><a href="https://uk.pinterest.com/brandingmusthaves/" target="_blank">Pinterest</a></li>
+                        <li><a href="https://www.tiktok.com/@branding.musthaves" target="_blank">TikTok</a></li>
                         <li><a href="mailto:hello@brandingmusthaves.com">LinkedIn</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <span class="footer-copyright">&copy; <span data-nl="2026 Branding Musthaves. Alle rechten voorbehouden.">2026 Branding Musthaves. All
-                    rights reserved.</span></span>
+                <span class="footer-copyright">&copy; <span
+                        data-nl="2026 Branding Musthaves. Alle rechten voorbehouden.">2026 Branding Musthaves. All
+                        rights reserved.</span></span>
                 <span class="footer-legal-links" style="margin-left: auto; display: flex; gap: 24px;">
                     <a href="terms.html"
                         style="color: rgba(199,185,163,0.5); text-decoration: none; font-size: 12px; transition: color 0.3s;"

@@ -1433,6 +1433,15 @@ footer {
     transition-delay: 0.45s;
 }
 
+/* ─── HELPER CLASSES ─── */
+.mobile-br {
+    display: none;
+}
+
+.desktop-br {
+    display: block;
+}
+
 /* ─── BREAKPOINTS ─── */
 @media (max-width: 1100px) {
     .container {
@@ -1573,21 +1582,34 @@ footer {
         gap: 40px;
     }
 
+    .mobile-br {
+        display: block;
+    }
+
+    .desktop-br {
+        display: none;
+    }
+
     .hero-inner {
-        padding: 100px 24px 60px !important;
+        padding: 140px 24px 60px !important;
+    }
+
+    .page-hero {
+        padding: 150px 24px 60px !important;
     }
 
     .section-header {
         margin-bottom: 48px;
     }
 
-    .section-title,
-    .scanner-title {
+    .section-title {
         font-size: clamp(32px, 9vw, 44px) !important;
         line-height: 1.15;
     }
 
-    .hero h1 {
+    .hero h1,
+    .page-hero h1,
+    .scanner-title {
         font-size: clamp(42px, 12vw, 56px) !important;
         /* Increased mobile size */
     }
