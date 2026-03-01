@@ -152,8 +152,8 @@
                             btn.style.pointerEvents = 'none';
 
                             try {
-                                // Let op: dit checkt nu via jouw eigen API die op de achtergrond draait!
-                                const response = await fetch('http://127.0.0.1:5000/api/scan', {
+                                // Omdat je Vercel gebruikt, hoeven we alleen nog maar /api/scan als relatief pad te geven, hij herkent dit direct als Vercel Serverless Function!
+                                const response = await fetch('/api/scan', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
