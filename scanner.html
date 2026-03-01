@@ -136,23 +136,110 @@
                 Thank you! Your scan request has been submitted.
             </div>
 
+            <!-- AUDIT RESULTATEN UI (VERBORGEN TOT SUCCES) -->
+            <div id="auditResultsUI"
+                style="display:-none; margin-top: 40px; margin-bottom: 60px; text-align: left; background: #fff; padding: 40px; border-radius: 12px; border: 1px solid rgba(33,22,18,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <span class="label" style="color: var(--amber); display: inline-block; margin-bottom: 12px;">Audit
+                        Rapport</span>
+                    <h2
+                        style="font-family: var(--serif); font-size: clamp(24px, 3vw, 32px); color: var(--dark); font-weight: 500; margin: 0;">
+                        Jouw Website Analyse</h2>
+                    <p style="font-family: var(--sans); font-size: 15px; color: rgba(33,22,18,0.7); margin-top: 12px;"
+                        id="auditUrlDisplay"></p>
+                </div>
+
+                <div id="auditContentBoxes">
+                    <!-- Javascript will inject the boxes here -->
+                </div>
+
+                <div
+                    style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(33,22,18,0.1); text-align: center;">
+                    <h3 style="font-family: var(--serif); font-size: 20px; color: var(--dark); margin-bottom: 16px;">
+                        Klaar voor meer omzet?</h3>
+                    <p
+                        style="font-family: var(--sans); font-size: 15px; color: rgba(33,22,18,0.7); margin-bottom: 24px;">
+                        Transformeer deze kritische punten direct in een website die daadwerkelijk verkoopt.</p>
+                    <a href="form.html" class="btn-fill" style="padding: 14px 28px;">Start Project Intake</a>
+                </div>
+            </div>
+
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
                     const form = document.getElementById('scannerForm');
                     const msg = document.getElementById('scannerMessage');
                     const btn = document.getElementById('scannerBtn');
+                    const resultsUI = document.getElementById('auditResultsUI');
+                    const resultsContainer = document.getElementById('auditContentBoxes');
+                    const urlDisplay = document.getElementById('auditUrlDisplay');
+                    
+                    resultsUI.style.display = 'none';
+
+                    // Helper om de rauwe JSON diep in MindStudio te vinden
+                    function extractAuditJSON(data) {
+                        if (!data) return null;
+                        
+                        // Kijk of het een object is dat onze structuur al heeft
+                        if (typeof data === 'object' && data.summary && Array.isArray(data.summary)) {
+                            return data;
+                        }
+
+                        // Stringify alles en zoek met een regex de JSON structuur op
+                        let dataString = typeof data === 'string' ? data : JSON.stringify(data);
+                        try {
+                            // Zoek naar een blokje { "summary": [...] }
+                            const jsonMatch = dataString.match(/\{[\s\S]*?"summary"[\s\S]*?\}/);
+                            if (jsonMatch) {
+                                // Maak schoon voor veilige parsing (soms gebruiken AI's extra ontsnappingen)
+                                let cleanJson = jsonMatch[0].replace(/\\\\/g, '\\').replace(/\\"/g, '"');
+                                let parsed = JSON.parse(cleanJson);
+                                if (parsed.summary && Array.isArray(parsed.summary)) {
+                                    return parsed;
+                                }
+                            }
+                        } catch (e) {
+                            console.error("Kon JSON niet exact parsen:", e);
+                        }
+                        return null;
+                    }
+
+                    function renderSection(title, items, icon) {
+                        if (!items || items.length === 0) return '';
+                        let listsHTML = items.map(item => {
+                            // Als het begint met positief
+                            let isPos = item.toLowerCase().includes('positief') || item.includes('✓');
+                            let dotColor = isPos ? '#7ecb8f' : 'var(--amber)';
+                            return `<div style="display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start;">
+                                <div style="margin-top: 4px; flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: ${dotColor};"></div>
+                                <div style="font-family: var(--sans); font-size: 14px; line-height: 1.6; color: rgba(33,22,18,0.8);">${item.replace(/(Positief:|Kritisch:)/ig, '<strong>$1</strong>')}</div>
+                            </div>`;
+                        }).join('');
+
+                        return `
+                        <div style="background: rgba(33,22,18,0.02); padding: 24px; border-radius: 8px; margin-bottom: 24px;">
+                            <h3 style="font-family: var(--serif); font-size: 18px; color: var(--dark); margin: 0 0 16px 0; display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 20px;">${icon}</span> ${title}
+                            </h3>
+                            <div>${listsHTML}</div>
+                        </div>`;
+                    }
 
                     if (form) {
                         form.addEventListener('submit', async (e) => {
                             e.preventDefault();
                             const url = document.getElementById('scannerUrl').value;
                             const email = document.getElementById('scannerEmail').value;
-
+                            
+                            // Toon aan de gebruiker dat we aan het laden zijn (AI duurt vaak 5-15s)
                             btn.style.opacity = '0.7';
                             btn.style.pointerEvents = 'none';
+                            const originalBtnText = btn.innerHTML;
+                            btn.innerHTML = `<span class="btn-text">Analyseert website...</span>`;
+                            
+                            resultsUI.style.display = 'none';
+                            msg.style.display = 'none';
 
                             try {
-                                // Omdat je Vercel gebruikt, hoeven we alleen nog maar /api/scan als relatief pad te geven, hij herkent dit direct als Vercel Serverless Function!
                                 const response = await fetch('/api/scan', {
                                     method: 'POST',
                                     headers: {
@@ -162,16 +249,44 @@
                                 });
 
                                 if (response.ok) {
-                                    msg.style.display = 'block';
+                                    const msData = await response.json();
+                                    
+                                    // Probeer JSON uit MSData te snijden
+                                    const auditData = extractAuditJSON(msData);
+                                    
+                                    if(auditData) {
+                                        // Vul de UI boxen
+                                        urlDisplay.innerText = url;
+                                        
+                                        let html = '';
+                                        html += renderSection('Algemene Samenvatting', auditData.summary, '📋');
+                                        html += renderSection('Design & Visuals', auditData.design, '✨');
+                                        html += renderSection('Conversie Optimalisatie', auditData.conversion, '🎯');
+                                        html += renderSection('SEO Analyse', auditData.seo, '🔍');
+                                        html += renderSection('Performance', auditData.performance, '⚡');
+                                        html += renderSection('Directe Aanbevelingen', auditData.recommendations, '💡');
+                                        
+                                        resultsContainer.innerHTML = html;
+                                        resultsUI.style.display = 'block';
+                                        
+                                        // Scroll prachtig zacht naar beneden
+                                        resultsUI.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    } else {
+                                        // Geen array structuur gevonden, val terug op standaard bericht
+                                        msg.innerText = "Bedankt! We hebben je rapport ontvangen als notificatie.";
+                                        msg.style.display = 'block';
+                                    }
+                                    
                                     form.reset();
                                 } else {
-                                    alert('Er ging iets mis. Probeer het opnieuw.');
+                                    alert('De capaciteit is momenteel druk bezet. Probeer het over een minuutje opnieuw.');
                                 }
                             } catch (err) {
-                                alert('Controleer of je backend script / server wel runnend is.');
+                                alert('Verbindingsfout naar de server.');
                             } finally {
                                 btn.style.opacity = '1';
                                 btn.style.pointerEvents = 'auto';
+                                btn.innerHTML = originalBtnText;
                             }
                         });
                     }
