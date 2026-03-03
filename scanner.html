@@ -175,23 +175,36 @@
 
                     resultsUI.style.display = 'none';
 
-                    // Helper om de rauwe JSON diep in MindStudio te vinden
+                    // Helper om de rauwe JSON diep in MindStudio te vinden, speciaal voor jouw prompt-structuur
                     function extractAuditJSON(data) {
                         if (!data) return null;
 
-                        // Vaak geeft MindStudio data.result of data.output 
-                        let rawStr = typeof data === 'string' ? data : JSON.stringify(data);
+                        // Pak de payload, MindStudio gebruikt vaak data.result
+                        let payload = data.result || data.output || data;
+
+                        // 1. Als het al perfecte JSON met jouw velden is:
+                        if (typeof payload === 'object' && payload !== null) {
+                            if (payload.summary && Array.isArray(payload.summary)) {
+                                return payload;
+                            }
+                        }
+
+                        // 2. Als we een string terugkrijgen, extraheren we de JSON
+                        let rawStr = typeof payload === 'string' ? payload : JSON.stringify(payload);
+
+                        // Strip markdown blokken zoals ```json en ```
+                        rawStr = rawStr.replace(/```json/gi, '').replace(/```/g, '').trim();
 
                         try {
-                            // Minder strikte regex: zoek het eerste block { "summary": ... }
-                            const jsonMatch = rawStr.match(/\{[\s\S]*?"summary"[\s\S]*?\}/i);
+                            // Zoek het stukje tekst dat start met { en eindigt met }
+                            // En bevat "summary", "seo", etc.
+                            const jsonMatch = rawStr.match(/\{[\s\S]*"summary"[\s\S]*"recommendations"[\s\S]*\}/i);
                             if (jsonMatch) {
                                 let cleanJson = jsonMatch[0]
                                     .replace(/\\\\/g, '\\')
                                     .replace(/\\"/g, '"')
                                     .replace(/\\n/g, '\n');
 
-                                // Extra cleaning: sometimes start JSON with \"{
                                 if (cleanJson.startsWith('"{')) cleanJson = cleanJson.substring(1);
                                 if (cleanJson.endsWith('}"')) cleanJson = cleanJson.substring(0, cleanJson.length - 1);
 
@@ -201,36 +214,36 @@
                                 }
                             }
 
-                            // Probeer domweg te parsen als het toevallig wél al puur is:
-                            let parsedDirect = typeof data === 'object' ? data : JSON.parse(data);
-                            if (parsedDirect.summary && Array.isArray(parsedDirect.summary)) return parsedDirect;
-                            if (parsedDirect.result) {
-                                let parsedResult = typeof parsedDirect.result === 'object' ? parsedDirect.result : JSON.parse(parsedDirect.result);
-                                if (parsedResult.summary && Array.isArray(parsedResult.summary)) return parsedResult;
-                            }
+                            // Domweg proberen:
+                            let directParse = JSON.parse(rawStr);
+                            if (directParse && Array.isArray(directParse.summary)) return directParse;
 
                         } catch (e) {
-                            console.error("Kon JSON niet exact parsen:", e, rawStr);
+                            console.error("Kon perfecte JSON structuur niet vinden. Ruwe string:", rawStr, e);
                         }
                         return null;
                     }
 
                     function renderSection(title, items, icon) {
-                        if (!items || items.length === 0) return '';
+                        if (!items || !Array.isArray(items) || items.length === 0) return '';
                         let listsHTML = items.map(item => {
-                            // Als het begint met positief
+                            // Detecteer positief vs kritisch obv jouw tone-of-voice instructies
                             let isPos = item.toLowerCase().includes('positief') || item.includes('✓');
                             let dotColor = isPos ? '#7ecb8f' : 'var(--amber)';
-                            return `<div style="display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start;">
-                                <div style="margin-top: 4px; flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: ${dotColor};"></div>
-                                <div style="font-family: var(--sans); font-size: 14px; line-height: 1.6; color: rgba(33,22,18,0.8);">${item.replace(/(Positief:|Kritisch:)/ig, '<strong>$1</strong>')}</div>
+
+                            // Maak woorden als Positief en Kritisch dikgedrukt
+                            let text = item.replace(/(Positief:|Kritisch:|Positief|Kritisch -|Positief -)/ig, '<strong>$1</strong>');
+
+                            return `<div style="display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start;">
+                                <div style="margin-top: 6px; flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: ${dotColor};"></div>
+                                <div style="font-family: var(--sans); font-size: 15px; line-height: 1.6; color: rgba(33,22,18,0.85);">${text}</div>
                             </div>`;
                         }).join('');
 
                         return `
-                        <div style="background: rgba(33,22,18,0.02); padding: 24px; border-radius: 8px; margin-bottom: 24px;">
-                            <h3 style="font-family: var(--serif); font-size: 18px; color: var(--dark); margin: 0 0 16px 0; display: flex; align-items: center; gap: 10px;">
-                                <span style="font-size: 20px;">${icon}</span> ${title}
+                        <div style="background: #faf9f7; padding: 32px; border-radius: 12px; margin-bottom: 24px; border: 1px solid rgba(199,185,163,0.2);">
+                            <h3 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 0 0 20px 0; display: flex; align-items: center; gap: 12px;">
+                                <span style="font-size: 24px;">${icon}</span> ${title}
                             </h3>
                             <div>${listsHTML}</div>
                         </div>`;
@@ -282,27 +295,54 @@
                                         resultsUI.style.display = 'block';
 
                                     } else {
-                                        // GARANTIE-MODUS: Als het totaal geen kloppende JSON is, dump dan platte tekst mooi in het kader
+                                        // GARANTIE-MODUS: Zelfs als het wéér compleet platte tekst is, maken we het prachtig!
                                         urlDisplay.innerText = url;
 
-                                        // Probeer nog iets te vissen:
-                                        let dumpText = typeof msData === 'object' ? JSON.stringify(msData, null, 2) : String(msData);
-                                        // Poets lelijke haken weg voor weergave
-                                        dumpText = dumpText.replace(/\\n/g, '<br>').replace(/["{}[\]]/g, '').trim();
+                                        // Haal de tekst op uit het Mindstudio resultaat
+                                        let rawText = typeof msData === 'object' ? (msData.result || msData.output || JSON.stringify(msData)) : String(msData);
 
-                                        if (dumpText === '' || dumpText === 'null') {
-                                            dumpText = 'De AI is nog bezig of stuurde leeg bestand retour. De aanvraag is genoteerd!';
+                                        // Maak op onnodige leestekens schoon (bijv de { en } van json)
+                                        rawText = rawText.replace(/\\n/g, '\n').replace(/["{}[\]]/g, '');
+
+                                        if (rawText.trim() === '' || rawText.trim() === 'null') {
+                                            rawText = 'De AI is nog bezig of stuurde geen inhoud retour. Probeer het later nog eens.';
                                         }
 
+                                        // We zoeken belangrijke kernwoorden (summary, seo, etc) en transformeren deze naar chique titels!
+                                        let formattedText = rawText
+                                            .replace(/^\s*summary\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">📋</span> Algemene Samenvatting</h4>')
+                                            .replace(/^\s*seo\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">🔍</span> SEO Analyse</h4>')
+                                            .replace(/^\s*performance\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">⚡</span> Performance</h4>')
+                                            .replace(/^\s*conversion\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">🎯</span> Conversie Optimalisatie</h4>')
+                                            .replace(/^\s*design\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">✨</span> Design & Visuals</h4>')
+                                            .replace(/^\s*recommendations\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">💡</span> Directe Aanbevelingen</h4>');
+
+                                        // We zoeken lijsten en maken er mooie bullets van, exact zoals de premium JSON-layout!
+                                        // Zoek zinsdelen die beginnen met "-" of "*" en formatteer ze
+                                        let lines = formattedText.split('\n');
+                                        lines = lines.map(line => {
+                                            if (line.trim().startsWith('-') || line.trim().startsWith('*')) {
+                                                let isPos = line.toLowerCase().includes('positief') || line.includes('✓');
+                                                let dotColor = isPos ? '#7ecb8f' : 'var(--amber)';
+                                                let content = line.trim().substring(1).trim();
+
+                                                content = content.replace(/(Positief:|Kritisch:|Positief|Kritisch -|Positief -)/ig, '<strong>$1</strong>');
+
+                                                return `<div style="display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start;">
+                                                    <div style="margin-top: 6px; flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: ${dotColor};"></div>
+                                                    <div style="font-family: var(--sans); font-size: 15px; line-height: 1.6; color: rgba(33,22,18,0.85);">${content}</div>
+                                                </div>`;
+                                            }
+                                            return line;
+                                        });
+
                                         let fallbackHtml = `
-                                        <div style="background: rgba(33,22,18,0.02); padding: 24px; border-radius: 8px; margin-bottom: 24px;">
-                                            <h3 style="font-family: var(--serif); font-size: 18px; color: var(--dark); margin: 0 0 16px 0; display: flex; align-items: center; gap: 10px;">
-                                                <span style="font-size: 20px;">🤖</span> Analyse Resultaat
-                                            </h3>
-                                            <div style="font-family: var(--sans); font-size: 14px; line-height: 1.6; color: rgba(33,22,18,0.8);">
-                                                ${dumpText}
-                                            </div>
+                                        <div style="background: #faf9f7; padding: 12px 32px 32px 32px; border-radius: 12px; margin-bottom: 24px; border: 1px solid rgba(199,185,163,0.2);">
+                                            ${lines.join('<br>')}
                                         </div>`;
+
+                                        // Schoon dubbele br tags op
+                                        fallbackHtml = fallbackHtml.replace(/(<br>\s*){2,}/g, '<br><br>');
 
                                         resultsContainer.innerHTML = fallbackHtml;
                                         resultsUI.style.display = 'block';
