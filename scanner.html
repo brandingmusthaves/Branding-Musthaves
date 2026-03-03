@@ -267,7 +267,7 @@
                                     const auditData = extractAuditJSON(msData);
 
                                     if (auditData) {
-                                        // Vul de UI boxen
+                                        // Vul de UI boxen met perfecte JSON
                                         urlDisplay.innerText = url;
 
                                         let html = '';
@@ -281,13 +281,35 @@
                                         resultsContainer.innerHTML = html;
                                         resultsUI.style.display = 'block';
 
-                                        // Scroll prachtig zacht naar beneden
-                                        resultsUI.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                     } else {
-                                        // Geen array structuur gevonden, val terug op standaard bericht
-                                        msg.innerText = "Bedankt! We hebben je rapport ontvangen als notificatie.";
-                                        msg.style.display = 'block';
+                                        // GARANTIE-MODUS: Als het totaal geen kloppende JSON is, dump dan platte tekst mooi in het kader
+                                        urlDisplay.innerText = url;
+
+                                        // Probeer nog iets te vissen:
+                                        let dumpText = typeof msData === 'object' ? JSON.stringify(msData, null, 2) : String(msData);
+                                        // Poets lelijke haken weg voor weergave
+                                        dumpText = dumpText.replace(/\\n/g, '<br>').replace(/["{}[\]]/g, '').trim();
+
+                                        if (dumpText === '' || dumpText === 'null') {
+                                            dumpText = 'De AI is nog bezig of stuurde leeg bestand retour. De aanvraag is genoteerd!';
+                                        }
+
+                                        let fallbackHtml = `
+                                        <div style="background: rgba(33,22,18,0.02); padding: 24px; border-radius: 8px; margin-bottom: 24px;">
+                                            <h3 style="font-family: var(--serif); font-size: 18px; color: var(--dark); margin: 0 0 16px 0; display: flex; align-items: center; gap: 10px;">
+                                                <span style="font-size: 20px;">🤖</span> Analyse Resultaat
+                                            </h3>
+                                            <div style="font-family: var(--sans); font-size: 14px; line-height: 1.6; color: rgba(33,22,18,0.8);">
+                                                ${dumpText}
+                                            </div>
+                                        </div>`;
+
+                                        resultsContainer.innerHTML = fallbackHtml;
+                                        resultsUI.style.display = 'block';
                                     }
+
+                                    // Scroll in beide gevallen mooi zacht naar het resultaatblok
+                                    resultsUI.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
                                     form.reset();
                                 } else {
