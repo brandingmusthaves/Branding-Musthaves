@@ -304,30 +304,47 @@
                                         // Maak op onnodige leestekens schoon (bijv de { en } van json)
                                         rawText = rawText.replace(/\\n/g, '\n').replace(/["{}[\]]/g, '');
 
+                                        // Detecteer actieve taal van de website
+                                        const isDutch = document.querySelector('.lang-btn[data-lang="nl"]').classList.contains('active');
+
+                                        // Vertaalde koppen op basis van de taalkeuze
+                                        const t = {
+                                            summary: isDutch ? 'Algemene Samenvatting' : 'Executive Summary',
+                                            seo: 'SEO Analyse', // Vaak internationaal begrepen, maar je kan ook 'SEO Analysis' doen
+                                            performance: 'Performance',
+                                            conversion: isDutch ? 'Conversie Optimalisatie' : 'Conversion Optimization',
+                                            design: 'Design & Visuals',
+                                            recommendations: isDutch ? 'Directe Aanbevelingen' : 'Immediate Recommendations',
+                                            busyText: isDutch 
+                                                ? 'De AI is nog bezig of stuurde geen inhoud retour. Probeer het later nog eens.'
+                                                : 'The AI is still processing or returned empty data. Please try again later.'
+                                        };
+
                                         if (rawText.trim() === '' || rawText.trim() === 'null') {
-                                            rawText = 'De AI is nog bezig of stuurde geen inhoud retour. Probeer het later nog eens.';
+                                            rawText = t.busyText;
                                         }
 
                                         // We zoeken belangrijke kernwoorden (summary, seo, etc) en transformeren deze naar chique titels!
                                         let formattedText = rawText
-                                            .replace(/^\s*summary\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">📋</span> Algemene Samenvatting</h4>')
-                                            .replace(/^\s*seo\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">🔍</span> SEO Analyse</h4>')
-                                            .replace(/^\s*performance\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">⚡</span> Performance</h4>')
-                                            .replace(/^\s*conversion\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">🎯</span> Conversie Optimalisatie</h4>')
-                                            .replace(/^\s*design\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">✨</span> Design & Visuals</h4>')
-                                            .replace(/^\s*recommendations\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">💡</span> Directe Aanbevelingen</h4>');
+                                            .replace(/^\s*summary\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">📋</span> ' + t.summary + '</h4>')
+                                            .replace(/^\s*seo\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">🔍</span> ' + t.seo + '</h4>')
+                                            .replace(/^\s*performance\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">⚡</span> ' + t.performance + '</h4>')
+                                            .replace(/^\s*conversion\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">🎯</span> ' + t.conversion + '</h4>')
+                                            .replace(/^\s*design\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">✨</span> ' + t.design + '</h4>')
+                                            .replace(/^\s*recommendations\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">💡</span> ' + t.recommendations + '</h4>');
 
                                         // We zoeken lijsten en maken er mooie bullets van, exact zoals de premium JSON-layout!
                                         // Zoek zinsdelen die beginnen met "-" of "*" en formatteer ze
                                         let lines = formattedText.split('\n');
                                         lines = lines.map(line => {
                                             if (line.trim().startsWith('-') || line.trim().startsWith('*')) {
-                                                let isPos = line.toLowerCase().includes('positief') || line.includes('✓');
+                                                let isPos = line.toLowerCase().includes('positief') || line.toLowerCase().includes('positive') || line.includes('✓');
                                                 let dotColor = isPos ? '#7ecb8f' : 'var(--amber)';
                                                 let content = line.trim().substring(1).trim();
-
-                                                content = content.replace(/(Positief:|Kritisch:|Positief|Kritisch -|Positief -)/ig, '<strong>$1</strong>');
-
+                                                
+                                                // Dikgedrukte markering voor zowel NL als EN tags:
+                                                content = content.replace(/(Positief:|Kritisch:|Positief|Kritisch -|Positief -|Positive:|Critical:|Positive|Critical -|Positive -)/ig, '<strong>$1</strong>');
+                                                
                                                 return `<div style="display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start;">
                                                     <div style="margin-top: 6px; flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: ${dotColor};"></div>
                                                     <div style="font-family: var(--sans); font-size: 15px; line-height: 1.6; color: rgba(33,22,18,0.85);">${content}</div>
