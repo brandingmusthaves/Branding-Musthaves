@@ -123,12 +123,12 @@
                     data-nl-placeholder="Uw website URL..." required />
                 <input id="scannerEmail" class="scanner-input" type="email" placeholder="Enter your email address..."
                     data-nl-placeholder="Uw e-mailadres..." required />
-                <button type="submit" class="scanner-btn-new" data-nl-text="Scan Aanvragen" id="scannerBtn">
+                <button type="submit" class="scanner-btn-new" data-nl-text="Scan Mijn Website" id="scannerBtn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <span class="btn-text">Request My Scan</span>
+                    <span class="btn-text">Scan My Website</span>
                 </button>
             </form>
             <div id="scannerMessage"
@@ -255,18 +255,19 @@
                             const url = document.getElementById('scannerUrl').value;
                             const email = document.getElementById('scannerEmail').value;
 
-                            // Toon aan de gebruiker dat we aan het laden zijn (AI duurt vaak 5-15s)
+                            // Check welke taal-knop actief is
+                            const isDutch = document.querySelector('.lang-btn[data-lang="nl"]').classList.contains('active');
+                            const activeLang = isDutch ? 'nl' : 'en';
+
+                            // Toon aan de gebruiker dat we aan het laden zijn inclusief een tijdsindicatie
                             btn.style.opacity = '0.7';
                             btn.style.pointerEvents = 'none';
                             const originalBtnText = btn.innerHTML;
-                            btn.innerHTML = `<span class="btn-text">Analyseert website...</span>`;
+                            const loadingText = isDutch ? 'Analyseert website... (~15 sec)' : 'Analyzing website... (~15 sec)';
+                            btn.innerHTML = `<span class="btn-text">${loadingText}</span>`;
 
                             resultsUI.style.display = 'none';
                             msg.style.display = 'none';
-
-                            // Check welke taal-knop actief is (omdat script.js geen body class toevoegt)
-                            const isDutch = document.querySelector('.lang-btn[data-lang="nl"]').classList.contains('active');
-                            const activeLang = isDutch ? 'nl' : 'en';
 
                             // Vertaalde koppen op basis van de taalkeuze, breed inzetbaar
                             const UI_TEXT = {
