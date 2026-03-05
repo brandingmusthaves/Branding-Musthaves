@@ -219,8 +219,7 @@ nav {
 
 .nav-logo-img {
     display: block;
-    height: 80px;
-    /* Changed from 100px absolute to perfectly align */
+    height: 120px;
     width: auto;
     filter: brightness(0) invert(1);
     transition: filter 0.3s;
@@ -243,6 +242,7 @@ header .hamburger-btn.active~.nav-logo-img {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
 }
 
 .nav-links a:hover {
@@ -320,6 +320,7 @@ header.scrolled .lang-btn.active {
     border: none;
     color: var(--dark);
     transition: all 0.3s;
+    white-space: nowrap;
 }
 
 header.scrolled .nav-cta {
@@ -1334,6 +1335,8 @@ footer {
     height: 80px;
     width: auto;
     margin-bottom: 24px;
+    margin-left: -12px;
+    /* Pull left to align the 'b' stem perfectly with text below */
     filter: brightness(0) invert(1);
     /* makes the dark logo white/light */
     display: block;
@@ -1443,6 +1446,26 @@ footer {
 }
 
 /* ─── BREAKPOINTS ─── */
+@media (max-width: 1400px) {
+
+    /* Compress desktop header spacing slightly before hamburger breakpoint */
+    .nav-logo-img {
+        height: 90px;
+    }
+
+    .nav-links {
+        gap: 24px;
+    }
+
+    .nav-right {
+        gap: 16px;
+    }
+
+    .container {
+        padding: 0 40px;
+    }
+}
+
 @media (max-width: 1100px) {
     .container {
         padding: 0 40px;
@@ -1475,7 +1498,7 @@ footer {
     }
 
     .nav-logo-img {
-        height: 50px;
+        height: 80px;
     }
 
     .nav-right {
@@ -1522,7 +1545,7 @@ footer {
     }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1100px) {
 
     /* Hero fixes for mobile/tablet */
     .hero>div {
@@ -1563,6 +1586,21 @@ footer {
 
     .service-card-block-dark {
         grid-template-columns: 1fr !important;
+    }
+
+    /* Override inline flexing on Noelia block for iPads so it doesn't squish */
+    div[style*="flex-wrap: wrap"]>div[style*="width: 240px"] {
+        width: 100% !important;
+        height: 440px !important;
+        /* Slightly taller for iPad */
+    }
+
+    div[style*="flex-wrap: wrap"]>div[style*="text-align: right"] {
+        align-items: center !important;
+        text-align: center !important;
+        padding: 16px 24px 32px !important;
+        width: 100% !important;
+        justify-content: center !important;
     }
 }
 
@@ -1727,7 +1765,7 @@ footer {
 
 @media (max-width: 480px) {
     .nav-logo-img {
-        height: 70px;
+        height: 90px;
     }
 
     .hero-actions {

@@ -126,39 +126,105 @@ elementsWithNLPlaceholder.forEach(el => {
     el.setAttribute('data-en-placeholder', el.getAttribute('placeholder'));
 });
 
-// Translation toggle function
+// Translation logic and LocalStorage
 const langButtons = document.querySelectorAll('.lang-btn');
+
+function setLanguage(lang) {
+    // Save to localStorage safely (might be blocked on file://)
+    try { localStorage.setItem('preferredLanguage', lang); } catch (e) { }
+
+    // Add class to body for potential CSS scoping
+    document.body.classList.remove('lang-nl', 'lang-en');
+    document.body.classList.add('lang-' + lang);
+
+    // Update active class on buttons
+    langButtons.forEach(b => {
+        b.classList.remove('active');
+        if (b.getAttribute('data-lang') === lang) {
+            b.classList.add('active');
+        }
+    });
+
+    // ZORG ERVOOR DAT ALLE LINKS OP DE PAGINA DE TAAL MEENEMEN:
+    document.querySelectorAll('a').forEach(a => {
+        let href = a.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+            let hash = '';
+            if (href.includes('#')) {
+                const parts = href.split('#');
+                href = parts[0];
+                hash = '#' + parts[1];
+            }
+            if (href) {
+                const parts = href.split('?');
+                let path = parts[0];
+                let queryStr = parts[1] || '';
+
+                // Bouw eigen query string om incompatibele URLSearchParams te vermijden
+                let params = [];
+                if (queryStr) {
+                    params = queryStr.split('&').filter(p => !p.startsWith('lang='));
+                }
+                params.push('lang=' + lang);
+                a.setAttribute('href', path + '?' + params.join('&') + hash);
+            }
+        }
+    });
+
+    // Swap standard innerHTML translations
+    elementsWithNL.forEach(el => {
+        if (el.hasAttribute('data-' + lang)) {
+            el.innerHTML = el.getAttribute('data-' + lang);
+        }
+    });
+
+    // Swap specific text within elements containing SVGs
+    elementsWithNLText.forEach(el => {
+        const textSpan = el.querySelector('.btn-text') || el;
+        if (el.hasAttribute('data-' + lang + '-text')) {
+            textSpan.innerHTML = el.getAttribute('data-' + lang + '-text');
+        }
+    });
+
+    // Swap placeholders
+    elementsWithNLPlaceholder.forEach(el => {
+        if (el.hasAttribute('data-' + lang + '-placeholder')) {
+            el.setAttribute('placeholder', el.getAttribute('data-' + lang + '-placeholder'));
+        }
+    });
+}
+
+// Click event for buttons
 langButtons.forEach(btn => {
     btn.addEventListener('click', () => {
         const lang = btn.getAttribute('data-lang');
-
-        // Update active class
-        langButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        // Swap standard innerHTML translations
-        elementsWithNL.forEach(el => {
-            if (el.hasAttribute('data-' + lang)) {
-                el.innerHTML = el.getAttribute('data-' + lang);
-            }
-        });
-
-        // Swap specific text within elements containing SVGs
-        elementsWithNLText.forEach(el => {
-            const textSpan = el.querySelector('.btn-text') || el;
-            if (el.hasAttribute('data-' + lang + '-text')) {
-                textSpan.innerHTML = el.getAttribute('data-' + lang + '-text');
-            }
-        });
-
-        // Swap placeholders
-        elementsWithNLPlaceholder.forEach(el => {
-            if (el.hasAttribute('data-' + lang + '-placeholder')) {
-                el.setAttribute('placeholder', el.getAttribute('data-' + lang + '-placeholder'));
-            }
-        });
+        setLanguage(lang);
     });
 });
+
+// Apply default/saved language immediately
+let savedLang = 'en'; // default fallback
+
+// Check URL param first (heel belangrijk voor file:// weergaves op Mac!)
+if (window.location.search.includes('lang=')) {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('lang')) {
+        savedLang = urlParams.get('lang');
+    }
+} else {
+    // Fallback: Check localStorage
+    try {
+        if (localStorage.getItem('preferredLanguage')) {
+            savedLang = localStorage.getItem('preferredLanguage');
+        }
+    } catch (e) { }
+}
+
+if (savedLang === 'nl') {
+    setLanguage('nl');
+} else {
+    setLanguage('en');
+}
 
 /* ─── HAMBURGER MENU ─────────────────────── */
 const hamburgerBtns = document.querySelectorAll('.hamburger-btn');

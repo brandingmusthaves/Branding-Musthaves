@@ -112,10 +112,10 @@
                     Free</em></h1>
             <p style="font-family: var(--sans); font-size: 16px; color: rgba(199,185,163,0.6); line-height: 1.8; margin-bottom: 48px;"
                 class="reveal reveal-delay-1"
-                data-nl="Een premium website is geen kostenpost, het is je krachtigste verkoopmedewerker. Ontvang een gratis, persoonlijke teardown-video. Ontdek exact waar je nu omzet laat liggen en hoe een strategisch Webdesign van Branding Musthaves zichzelf meervoudig terugverdient.">
-                A premium website isn't an expense, it's your most powerful sales asset. Get a free, personalized
-                teardown video. Discover exactly where you're leaving money on the table, and how a strategic web design
-                from Branding Musthaves pays for itself.
+                data-nl="Een premium website is geen kostenpost, het is je krachtigste verkoopmedewerker. Ontvang binnen enkele seconden een uitgebreid, gratis website rapport. Ontdek precies wat je nu al goed doet, waar je omzet laat liggen, en welke strategische verbeteringen direct voor meer conversie zorgen.">
+                A premium website isn't an expense, it's your most powerful sales asset. Receive a comprehensive, free
+                website audit in seconds. Discover exactly what you're already doing well, where you're
+                leaving money on the table, and which strategic improvements will instantly boost your conversions.
             </p>
             <form id="scannerForm" class="scanner-form reveal reveal-delay-2"
                 style="margin: 0 auto; margin-bottom: 60px;">
@@ -250,6 +250,23 @@
                     }
 
                     if (form) {
+                        // Auto-submit support if coming from the homepage
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const autoUrl = urlParams.get('scanUrl');
+                        const autoEmail = urlParams.get('scanEmail');
+
+                        if (autoUrl && autoEmail) {
+                            document.getElementById('scannerUrl').value = autoUrl;
+                            document.getElementById('scannerEmail').value = autoEmail;
+
+                            setTimeout(() => {
+                                // Scroll smoothly to the form to show the loading state
+                                window.scrollTo({ top: form.offsetTop - 80, behavior: 'smooth' });
+                                // Fire off the submit instantly
+                                form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                            }, 400);
+                        }
+
                         form.addEventListener('submit', async (e) => {
                             e.preventDefault();
                             const url = document.getElementById('scannerUrl').value;
@@ -257,7 +274,7 @@
 
                             // Check welke taal-knop actief is
                             const isDutch = document.querySelector('.lang-btn[data-lang="nl"]').classList.contains('active');
-                            const activeLang = isDutch ? 'nl' : 'en';
+                            const activeLang = isDutch ? 'Nederlands' : 'English';
 
                             // Toon aan de gebruiker dat we aan het laden zijn inclusief een tijdsindicatie
                             btn.style.opacity = '0.7';
@@ -388,9 +405,10 @@
 
             <div style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; font-family: var(--sans); font-size: 13px; color: rgba(199,185,163,0.5); letter-spacing: 0.1em; text-transform: uppercase;"
                 class="reveal reveal-delay-2">
-                <span>✓ &nbsp;Visual Design Check</span>
-                <span>✓ &nbsp;Messaging Clarity</span>
-                <span>✓ &nbsp;Actionable Feedback</span>
+                <span data-nl="✓ &nbsp;SEO & Performance">✓ &nbsp;SEO & Performance</span>
+                <span data-nl="✓ &nbsp;Design & Visuals">✓ &nbsp;Design & Visuals</span>
+                <span data-nl="✓ &nbsp;Conversie Optimalisatie">✓ &nbsp;Conversion Optimization</span>
+                <span data-nl="✓ &nbsp;Directe Aanbevelingen">✓ &nbsp;Direct Recommendations</span>
             </div>
 
         </div>
@@ -679,7 +697,7 @@
     </footer>
 
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2"></script>
 </body>
 
 </html>

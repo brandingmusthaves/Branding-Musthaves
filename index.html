@@ -66,7 +66,7 @@
                     <span data-nl="Premium Webdesign Studio">Premium Web Design Studio</span>
                 </div>
 
-                <h1 class="reveal" data-nl="Websites <br>Gebouwd Om te <em>Groeien</em><br>Jouw Bedrijf.">
+                <h1 class="reveal" data-nl="Websites Gebouwd<br>Om Jouw Bedrijf<br>Te Laten <em>Groeien</em>.">
                     Websites <br>Built to <em>Grow</em><br>Your Business.
                 </h1>
 
@@ -215,17 +215,17 @@
                     attached.
                 </p>
                 <div class="scanner-features reveal reveal-delay-2">
-                    <span>✓ &nbsp;Design Review</span>
-                    <span>✓ &nbsp;Messaging Clarity</span>
-                    <span>✓ &nbsp;Conversion Potential</span>
-                    <span>✓ &nbsp;Personal Feedback</span>
+                    <span data-nl="✓ &nbsp;SEO & Performance">✓ &nbsp;SEO & Performance</span>
+                    <span data-nl="✓ &nbsp;Design & Visuals">✓ &nbsp;Design & Visuals</span>
+                    <span data-nl="✓ &nbsp;Conversie Optimalisatie">✓ &nbsp;Conversion Optimization</span>
+                    <span data-nl="✓ &nbsp;Directe Aanbevelingen">✓ &nbsp;Direct Recommendations</span>
                 </div>
-                <form class="scanner-form" onsubmit="return false;">
-                    <input class="scanner-input" type="url" placeholder="Enter your website URL..."
-                        data-nl-placeholder="Uw website URL..." />
-                    <input class="scanner-input" type="email" placeholder="Enter your email address..."
-                        data-nl-placeholder="Uw e-mailadres..." />
-                    <button type="submit" class="scanner-btn-new" data-nl-text="Website scannen">
+                <form id="homeScannerForm" class="scanner-form">
+                    <input id="homeScannerUrl" class="scanner-input" type="url" placeholder="Enter your website URL..."
+                        data-nl-placeholder="Uw website URL..." required />
+                    <input id="homeScannerEmail" class="scanner-input" type="email"
+                        placeholder="Enter your email address..." data-nl-placeholder="Uw e-mailadres..." required />
+                    <button type="submit" class="scanner-btn-new" data-nl-text="Scan Mijn Website">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
@@ -234,6 +234,15 @@
                         <span class="btn-text">Scan My Website</span>
                     </button>
                 </form>
+                <script>
+                    document.getElementById('homeScannerForm').addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        const url = encodeURIComponent(document.getElementById('homeScannerUrl').value);
+                        const email = encodeURIComponent(document.getElementById('homeScannerEmail').value);
+                        const isDutch = document.querySelector('.lang-btn[data-lang="nl"]').classList.contains('active');
+                        window.location.href = 'scanner.html?lang=' + (isDutch ? 'nl' : 'en') + '&scanUrl=' + url + '&scanEmail=' + email;
+                    });
+                </script>
             </div>
         </div>
     </section>
@@ -510,7 +519,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2"></script>
 </body>
 
 </html>
