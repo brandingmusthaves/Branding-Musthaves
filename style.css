@@ -1630,6 +1630,12 @@ footer {
 
     .hero-inner {
         padding: 100px 24px 60px !important;
+        text-align: center !important;
+        align-items: center !important;
+    }
+
+    .hero-actions {
+        justify-content: center !important;
     }
 
     .page-hero {
@@ -1646,13 +1652,24 @@ footer {
     }
 
     .hero h1,
-    .page-hero h1,
+    .page-hero h1 {
+        font-size: clamp(40px, 12vw, 64px) !important;
+    }
+
     .scanner-title {
-        font-size: clamp(36px, 10vw, 56px) !important;
+        font-size: clamp(44px, 13vw, 68px) !important;
     }
 
     body.lang-nl .hero h1 {
-        font-size: clamp(32px, 9vw, 56px) !important;
+        font-size: clamp(36px, 11vw, 64px) !important;
+    }
+
+    #faq {
+        padding-bottom: 30px !important;
+    }
+
+    #cta {
+        padding-top: 30px !important;
     }
 
     .nav-right {
