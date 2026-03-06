@@ -1648,8 +1648,11 @@ footer {
     .hero h1,
     .page-hero h1,
     .scanner-title {
-        font-size: clamp(42px, 12vw, 56px) !important;
-        /* Increased mobile size */
+        font-size: clamp(36px, 10vw, 56px) !important;
+    }
+
+    body.lang-nl .hero h1 {
+        font-size: clamp(32px, 9vw, 56px) !important;
     }
 
     .nav-right {
@@ -1778,10 +1781,12 @@ footer {
 
     .btn-hero-primary,
     .btn-hero-secondary {
-        padding: 12px 18px !important;
-        font-size: 11px !important;
+        padding: 12px 10px !important;
+        font-size: 10px !important;
         flex: 1;
         justify-content: center;
+        white-space: nowrap;
+        gap: 6px;
     }
 
     /* On very small mobile screens, the header elements get too crowded */
