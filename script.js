@@ -145,31 +145,6 @@ function setLanguage(lang) {
         }
     });
 
-    // ZORG ERVOOR DAT ALLE LINKS OP DE PAGINA DE TAAL MEENEMEN:
-    document.querySelectorAll('a').forEach(a => {
-        let href = a.getAttribute('href');
-        if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
-            let hash = '';
-            if (href.includes('#')) {
-                const parts = href.split('#');
-                href = parts[0];
-                hash = '#' + parts[1];
-            }
-            if (href) {
-                const parts = href.split('?');
-                let path = parts[0];
-                let queryStr = parts[1] || '';
-
-                // Bouw eigen query string om incompatibele URLSearchParams te vermijden
-                let params = [];
-                if (queryStr) {
-                    params = queryStr.split('&').filter(p => !p.startsWith('lang='));
-                }
-                params.push('lang=' + lang);
-                a.setAttribute('href', path + '?' + params.join('&') + hash);
-            }
-        }
-    });
 
     // Swap standard innerHTML translations
     elementsWithNL.forEach(el => {
