@@ -233,13 +233,13 @@ header .hamburger-btn.active~.nav-logo-img {
 
 .nav-links {
     display: flex;
-    gap: 48px;
+    gap: 64px;
 }
 
 .nav-links a {
     font-size: 13px;
     font-weight: 500;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.7);
     white-space: nowrap;
