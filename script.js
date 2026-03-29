@@ -178,7 +178,7 @@ langButtons.forEach(btn => {
 });
 
 // Apply default/saved language immediately
-let savedLang = 'en'; // default fallback
+let savedLang = 'nl'; // default fallback
 
 // Check URL param first (heel belangrijk voor file:// weergaves op Mac!)
 if (window.location.search.includes('lang=')) {
