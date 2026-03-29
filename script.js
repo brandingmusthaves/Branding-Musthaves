@@ -106,24 +106,22 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     });
 });
 
-/* ─── LANGUAGE TRANSLATION ────────────────── */
-// Store original English texts
-const elementsWithNL = document.querySelectorAll('[data-nl]');
-elementsWithNL.forEach(el => {
-    el.setAttribute('data-en', el.innerHTML); // save English exactly as it was written
+/* ─── LANGUAGE TRANSLATION (NL First) ────────────────── */
+// Store original Dutch texts (so we can go back to NL if user clicks EN then back to NL)
+const elementsWithEN = document.querySelectorAll('[data-en]');
+elementsWithEN.forEach(el => {
+    el.setAttribute('data-nl', el.innerHTML); // Save Dutch exactly as it is in the HTML
 });
 
-// For buttons with svgs / text spans
-const elementsWithNLText = document.querySelectorAll('[data-nl-text]');
-elementsWithNLText.forEach(el => {
+const elementsWithENText = document.querySelectorAll('[data-en-text]');
+elementsWithENText.forEach(el => {
     const textSpan = el.querySelector('.btn-text') || el;
-    el.setAttribute('data-en-text', textSpan.innerHTML);
+    el.setAttribute('data-nl-text', textSpan.innerHTML);
 });
 
-// For inputs with placeholders
-const elementsWithNLPlaceholder = document.querySelectorAll('[data-nl-placeholder]');
-elementsWithNLPlaceholder.forEach(el => {
-    el.setAttribute('data-en-placeholder', el.getAttribute('placeholder'));
+const elementsWithENPlaceholder = document.querySelectorAll('[data-en-placeholder]');
+elementsWithENPlaceholder.forEach(el => {
+    el.setAttribute('data-nl-placeholder', el.getAttribute('placeholder'));
 });
 
 // Translation logic and LocalStorage
@@ -145,16 +143,15 @@ function setLanguage(lang) {
         }
     });
 
-
     // Swap standard innerHTML translations
-    elementsWithNL.forEach(el => {
+    elementsWithEN.forEach(el => {
         if (el.hasAttribute('data-' + lang)) {
             el.innerHTML = el.getAttribute('data-' + lang);
         }
     });
 
     // Swap specific text within elements containing SVGs
-    elementsWithNLText.forEach(el => {
+    elementsWithENText.forEach(el => {
         const textSpan = el.querySelector('.btn-text') || el;
         if (el.hasAttribute('data-' + lang + '-text')) {
             textSpan.innerHTML = el.getAttribute('data-' + lang + '-text');
@@ -162,7 +159,7 @@ function setLanguage(lang) {
     });
 
     // Swap placeholders
-    elementsWithNLPlaceholder.forEach(el => {
+    elementsWithENPlaceholder.forEach(el => {
         if (el.hasAttribute('data-' + lang + '-placeholder')) {
             el.setAttribute('placeholder', el.getAttribute('data-' + lang + '-placeholder'));
         }
