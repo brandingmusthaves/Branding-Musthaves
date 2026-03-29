@@ -177,21 +177,16 @@ langButtons.forEach(btn => {
 // Apply default/saved language immediately
 let savedLang = 'nl'; // default fallback
 
-// Check URL param first (heel belangrijk voor file:// weergaves op Mac!)
+// 180: Check URL param first (for special links)
 if (window.location.search.includes('lang=')) {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('lang')) {
         savedLang = urlParams.get('lang');
     }
-} else {
-    // Fallback: Check localStorage
-    try {
-        if (localStorage.getItem('preferredLanguage')) {
-            savedLang = localStorage.getItem('preferredLanguage');
-        }
-    } catch (e) { }
 }
 
+// Ensure first visit (or refresh) is always Dutch by default
+// No longer reading from localStorage for the INITIAL state to guarantee Dutch-first.
 if (savedLang === 'nl') {
     setLanguage('nl');
 } else {
