@@ -152,6 +152,83 @@
             line-height: 1.5;
         }
 
+        /* ─── FOUNDER SECTION ─── */
+        .about-founder {
+            padding: 80px 0 120px;
+            background: #fff;
+        }
+
+        .founder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 100px;
+            align-items: center;
+        }
+
+        .founder-image {
+            position: relative;
+        }
+
+        .founder-img {
+            width: 100%;
+            height: auto;
+            border-radius: 24px;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            box-shadow: 0 40px 100px rgba(33, 22, 18, 0.12);
+        }
+
+        .founder-text {
+            max-width: 580px;
+        }
+
+        .founder-text h2 {
+            font-family: var(--serif);
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 500;
+            color: var(--dark);
+            margin: 20px 0 32px;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        .founder-text h2 em {
+            color: #c7b9a3;
+            font-style: italic;
+        }
+
+        .founder-text p {
+            font-family: var(--sans);
+            font-size: 15px;
+            color: rgba(33, 22, 18, 0.6);
+            line-height: 1.95;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .founder-grid {
+                gap: 60px;
+            }
+        }
+
+        @media (max-width: 960px) {
+            .founder-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .founder-text {
+                order: 2;
+                max-width: 100%;
+            }
+
+            .founder-image {
+                order: 1;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+
         /* ─── STORY SECTION ─── */
         .about-story {
             background: #faf8f4;
@@ -399,7 +476,8 @@
     <section class="page-hero">
         <div class="container">
             <span class="label reveal" data-en="Over Ons">Over Ons</span>
-            <h1 class="reveal reveal-delay-1" data-en="Your Brand,<br><em>Your Story.">Jouw Merk,<br><em>Jouw Verhaal.</em></em>
+            <h1 class="reveal reveal-delay-1" data-en="Your Brand,<br><em>Your Story.">Jouw Merk,<br><em>Jouw
+                    Verhaal.</em></em>
             </h1>
 
         </div>
@@ -414,14 +492,17 @@
                 <div class="about-intro-text reveal">
                     <span class="label" data-en="De Studio">De Studio</span>
                     <h2 data-en="We Build Brands &amp;
-                        Websites That<br><em>Actually Work for You">Wij Bouwen Merken &amp; Websites Die Echt Voor Je Werken</em></h2>
-                    <p
-                        data-en="At Branding Musthaves we work with entrepreneurs on a brand identity and website that suits
+                        Websites That<br><em>Actually Work for You">Wij Bouwen Merken &amp; Websites Die Echt Voor Je
+                        Werken</em></h2>
+                    <p data-en="At Branding Musthaves we work with entrepreneurs on a brand identity and website that suits
                         them. What once started as sharing tips on TikTok grew into a small studio where we work on
-                        branding and web design every day.">Bij Branding Musthaves werken we met ondernemers aan een merkidentiteit en website die bij ze passen. Wat ooit begon als tips delen op TikTok, is uitgegroeid tot een klein studio waar we dagelijks aan branding en webdesign werken.</p>
-                    <p
-                        data-en="We have a background in graphic design, web design, and brand strategy. That means we don't just
-                        look at how something looks, but also whether everything makes sense — from logo to website.">We hebben een achtergrond in grafisch design, webdesign en merkstrategie. Dat betekent dat we niet puur naar hoe iets eruitziet kijken, maar ook naar of alles klopt van logo tot website.</p>
+                        branding and web design every day.">Bij Branding Musthaves werken we met ondernemers aan een
+                        merkidentiteit en website die bij ze passen. Wat ooit begon als tips delen op TikTok, is
+                        uitgegroeid tot een klein studio waar we dagelijks aan branding en webdesign werken.</p>
+                    <p data-en="We have a background in graphic design, web design, and brand strategy. That means we don't just
+                        look at how something looks, but also whether everything makes sense — from logo to website.">
+                        We hebben een achtergrond in grafisch design, webdesign en merkstrategie. Dat betekent dat we
+                        niet puur naar hoe iets eruitziet kijken, maar ook naar of alles klopt van logo tot website.</p>
                 </div>
 
                 <!-- Right: stat cards -->
@@ -442,6 +523,32 @@
         </div>
     </section>
 
+    <!-- ─── FOUNDER SECTION ─── -->
+    <section class="about-founder reveal">
+        <div class="container">
+            <div class="founder-grid">
+                <div class="founder-image">
+                    <img src="images/founder-portrait.jpg" alt="Julia - Founder of Branding Musthaves"
+                        class="founder-img">
+                </div>
+                <div class="founder-text reveal reveal-delay-1">
+                    <span class="label" data-en="Maak Kennis Met">Maak Kennis Met</span>
+                    <h2 data-en="High-End Design, <em>Personal</em> Connection">High-End Design, <em>Persoonlijke</em>
+                        Connectie</h2>
+                    <p
+                        data-en="I believe that every brand has a heart, and it's my mission to make that heart beat through strategic design. When we work together, you're not just getting a website; you're getting a dedicated partner who cares as much about your brand's growth as you do.">
+                        Ik geloof dat elk merk een hart heeft, en het is mijn missie om dat hart te laten kloppen door
+                        strategisch design. Als we samenwerken, krijg je niet zomaar een website; je krijgt een
+                        toegewijde partner die net zoveel om de groei van je merk geeft als jijzelf.</p>
+                    <p
+                        data-en="Every detail matters. From the way a font looks to the flow of your user experience. Let's build something that makes your audience stop and stare.">
+                        Elk detail telt. Van de manier waarop een lettertype oogt tot de flow van je gebruikerservaring.
+                        Laten we samen iets bouwen waar je doelgroep voor stopt en naar blijft kijken.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ─── STORY SECTION ─── -->
     <section class="about-story">
         <div class="container">
@@ -451,17 +558,19 @@
                     We<br><em>Started Branding Musthaves">Waarom We<br><em>Branding Musthaves Startten</em></em></h2>
                 <div class="about-story-body">
                     <div class="about-pullquote reveal">
-                        <p
-                            data-en="We know how overwhelming it can feel to build a brand and website that truly fits who you
-                            are.">We weten hoe overweldigend het kan zijn om een merk én website op te bouwen die echt bij jou past.</p>
+                        <p data-en="We know how overwhelming it can feel to build a brand and website that truly fits who you
+                            are.">We weten hoe overweldigend het kan zijn om een merk én website op te bouwen die echt
+                            bij jou past.</p>
                     </div>
-                    <p class="reveal"
-                        data-en="Branding Musthaves started because we saw how hard it is as an entrepreneur to put together a
+                    <p class="reveal" data-en="Branding Musthaves started because we saw how hard it is as an entrepreneur to put together a
                         decent brand. There are so many choices, and it's not always obvious where to begin. We make
-                        that part easier.">Branding Musthaves is begonnen omdat we zagen hoe lastig het is om als ondernemer een goed merk neer te zetten. Er zijn zoveel keuzes, en het is niet altijd duidelijk waar je begint. Dat stuk maken wij makkelijker.</p>
-                    <p class="reveal"
-                        data-en="Some clients come for a brand identity, others for a website or template. We help with both.
-                        Because every business deserves a look that just makes sense.">Sommige klanten komen voor een merkidentiteit, anderen voor een website of template. We helpen bij allebei. Want elk bedrijf verdient een uitstraling die gewoon klopt.</p>
+                        that part easier.">Branding Musthaves is begonnen omdat we zagen hoe lastig het is om als
+                        ondernemer een goed merk neer te zetten. Er zijn zoveel keuzes, en het is niet altijd duidelijk
+                        waar je begint. Dat stuk maken wij makkelijker.</p>
+                    <p class="reveal" data-en="Some clients come for a brand identity, others for a website or template. We help with both.
+                        Because every business deserves a look that just makes sense.">Sommige klanten komen voor een
+                        merkidentiteit, anderen voor een website of template. We helpen bij allebei. Want elk bedrijf
+                        verdient een uitstraling die gewoon klopt.</p>
                 </div>
             </div>
         </div>
@@ -480,23 +589,24 @@
                 <div class="about-value-card reveal">
                     <div class="about-value-num">01</div>
                     <h3 class="about-value-title" data-en="Honesty Above All">Eerlijkheid Boven Alles</h3>
-                    <p class="about-value-desc"
-                        data-en="No sugarcoating if something isn't right for you. We always give honest advice, even if that
-                        means pointing you in a different direction.">Geen mooie praatjes als iets niet bij je past. We geven altijd eerlijk advies, ook als dat betekent dat we je een andere richting insturen.</p>
+                    <p class="about-value-desc" data-en="No sugarcoating if something isn't right for you. We always give honest advice, even if that
+                        means pointing you in a different direction.">Geen mooie praatjes als iets niet bij je past. We
+                        geven altijd eerlijk advies, ook als dat betekent dat we je een andere richting insturen.</p>
                 </div>
                 <div class="about-value-card reveal reveal-delay-1">
                     <div class="about-value-num">02</div>
-                    <h3 class="about-value-title" data-en="Clarity Over Complexity">Duidelijkheid Boven Complexiteit</h3>
-                    <p class="about-value-desc"
-                        data-en="Web design doesn't have to be complicated. We keep the process clear and enjoyable, from that
-                        first conversation all the way to the final handover.">Webdesign hoeft niet ingewikkeld te zijn. We maken het proces helder en prettig, van het eerste gesprek tot aan de oplevering.</p>
+                    <h3 class="about-value-title" data-en="Clarity Over Complexity">Duidelijkheid Boven Complexiteit
+                    </h3>
+                    <p class="about-value-desc" data-en="Web design doesn't have to be complicated. We keep the process clear and enjoyable, from that
+                        first conversation all the way to the final handover.">Webdesign hoeft niet ingewikkeld te
+                        zijn. We maken het proces helder en prettig, van het eerste gesprek tot aan de oplevering.</p>
                 </div>
                 <div class="about-value-card reveal reveal-delay-2">
                     <div class="about-value-num">03</div>
                     <h3 class="about-value-title" data-en="Your Story First">Jouw Verhaal Centraal</h3>
-                    <p class="about-value-desc"
-                        data-en="Every brand is different. We listen first, then we design. No generic solutions, just something
-                        that genuinely fits you.">Elk merk is anders. We luisteren eerst, dan ontwerpen we. Geen generieke oplossingen, maar iets dat echt bij jou past.</p>
+                    <p class="about-value-desc" data-en="Every brand is different. We listen first, then we design. No generic solutions, just something
+                        that genuinely fits you.">Elk merk is anders. We luisteren eerst, dan ontwerpen we. Geen
+                        generieke oplossingen, maar iets dat echt bij jou past.</p>
                 </div>
             </div>
         </div>
@@ -521,7 +631,8 @@
                             alt="Branding Musthaves - Premium Web Design Studio & Showit Templates"
                             class="footer-logo-img" /></a>
                     <p class="footer-desc"
-                        data-en="Premium web design for brands that<br>demand clarity, authority, and results.">Premium webdesign voor merken die<br>helderheid, autoriteit en resultaat eisen.</p>
+                        data-en="Premium web design for brands that<br>demand clarity, authority, and results.">Premium
+                        webdesign voor merken die<br>helderheid, autoriteit en resultaat eisen.</p>
                     <span
                         style="display: block; margin-top: 16px; opacity: 0.6; font-size: 13px; font-family: var(--sans);">KvK-nummer:
                         99784793</span>
@@ -555,8 +666,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <span class="footer-copyright">&copy; <span
-                        data-en="2026 Branding Musthaves. All
+                <span class="footer-copyright">&copy; <span data-en="2026 Branding Musthaves. All
                         rights reserved.">2026 Branding Musthaves. Alle rechten voorbehouden.</span></span>
                 <span class="footer-legal-links" style="margin-left: auto; display: flex; gap: 24px;">
                     <a href="terms.html"
