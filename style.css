@@ -1620,9 +1620,12 @@ footer {
     .nav-links {
         position: fixed;
         inset: 0;
-        background: rgba(20, 13, 10, 0.98);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
+        background: var(--dark);
+        /* Signature deep brown */
+        background: rgba(33, 22, 18, 0.97);
+        /* Very opaque dark brown */
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1951,9 +1954,10 @@ footer {
     }
 
     .btn-hero-primary,
-    .btn-hero-secondary {
-        padding: 12px 6px !important;
-        font-size: 9.5px !important;
+    .btn-hero-secondary,
+    .btn-outline-dark {
+        padding: 12px 4px !important;
+        font-size: 9px !important;
         flex: 1;
         justify-content: center;
         white-space: nowrap;
@@ -1962,7 +1966,8 @@ footer {
     }
 
     .btn-hero-primary svg,
-    .btn-hero-secondary svg {
+    .btn-hero-secondary svg,
+    .btn-outline-dark svg {
         width: 12px;
         height: 12px;
     }
