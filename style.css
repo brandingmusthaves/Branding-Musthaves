@@ -184,7 +184,8 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 100000;
+    /* Stays on top of everything */
     padding: 14px 0;
     transition: all 0.4s var(--ease-out);
 }
@@ -1618,25 +1619,27 @@ footer {
     }
 
     .nav-links {
-        position: fixed;
-        inset: 0;
-        background: var(--dark);
-        /* Signature deep brown */
-        background: rgba(33, 22, 18, 0.97);
-        /* Very opaque dark brown */
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
+        position: fixed !important;
+        inset: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: #211612 !important;
+        /* Solid Brand Brown, Zero Transparency */
+        background-color: var(--dark) !important;
+        backdrop-filter: blur(25px) !important;
+        -webkit-backdrop-filter: blur(25px) !important;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 32px;
-        z-index: 1000;
+        z-index: 100001 !important;
+        /* Above the header bar elements */
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.5s ease;
-        margin: 0;
-        padding: 0;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .nav-links.active {
@@ -1691,6 +1694,12 @@ footer {
         font-weight: 400;
         text-transform: none;
         letter-spacing: 0;
+        display: block;
+    }
+
+    /* Ensure scrolled header doesn't turn menu links dark on mobile */
+    header.scrolled .nav-links a {
+        color: var(--white) !important;
     }
 
     .nav-links a:hover {
