@@ -213,8 +213,8 @@ nav {
     display: flex;
     align-items: center;
     position: relative;
-    z-index: 1002;
-    /* Keeps logo above mobile menu */
+    z-index: 100005;
+    /* Above mobile menu */
     text-decoration: none;
 }
 
@@ -226,10 +226,13 @@ nav {
     transition: filter 0.3s;
 }
 
-/* When header turns light on scroll or hamburger is open — show the dark logo */
-header.scrolled .nav-logo-img,
-header .hamburger-btn.active~.nav-logo-img {
+header.scrolled .nav-logo-img {
     filter: none;
+}
+
+/* Ensure logo stays white when dark menu is open */
+header.mobile-menu-active .nav-logo-img {
+    filter: brightness(0) invert(1) !important;
 }
 
 .nav-links {
@@ -256,8 +259,8 @@ header .hamburger-btn.active~.nav-logo-img {
     display: flex;
     align-items: center;
     gap: 24px;
-    z-index: 1002;
-    /* Keep above dropdown */
+    z-index: 100005;
+    /* Always stays on top of menu overlay */
     position: relative;
 }
 

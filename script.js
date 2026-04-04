@@ -198,10 +198,13 @@ const hamburgerBtns = document.querySelectorAll('.hamburger-btn');
 const navLinksContainer = document.querySelector('.nav-links');
 
 if (hamburgerBtns.length > 0 && navLinksContainer) {
+    const headerEl = document.getElementById('header');
     hamburgerBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             btn.classList.toggle('active');
             navLinksContainer.classList.toggle('active');
+            if (headerEl) headerEl.classList.toggle('mobile-menu-active');
+
             // Prevent scrolling on body when menu is open
             document.body.style.overflow = navLinksContainer.classList.contains('active') ? 'hidden' : '';
         });
@@ -213,6 +216,7 @@ if (hamburgerBtns.length > 0 && navLinksContainer) {
         item.addEventListener('click', () => {
             hamburgerBtns.forEach(b => b.classList.remove('active'));
             navLinksContainer.classList.remove('active');
+            if (headerEl) headerEl.classList.remove('mobile-menu-active');
             document.body.style.overflow = '';
         });
     });
