@@ -17,29 +17,51 @@ export default async function handler(req, res) {
     }
 
     try {
-        // 1. Start de Analyse in MindStudio!
-        const msResponse = await fetch('https://api.mindstudio.ai/developer/v2/agents/run', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${apiKey}`,
-                'Content-Type': 'application/json',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-            },
-            body: JSON.stringify({
-                agentId: agentId,
-                workflow: 'Main',
-                variables: {
-                    websiteContent: '',
-                    websiteUrl: websiteUrl,
-                    email: email,
-                    language: language || 'nl'
-                }
-            })
-        });
+        // We proberen de meest actuele MindStudio v2 endpoint. 
+        // We gebruiken zowel 'agentId' als 'appId' in de payload voor maximale compatibiliteit.
+        const msEndpoints = [
+            'https://api.mindstudio.ai/developer/v2/apps/run',
+            'https://v1.mindstudio-api.com/developer/v2/apps/run',
+            'https://api.mindstudio.ai/developer/v2/agents/run'
+        ];
 
-        if (!msResponse.ok) {
-            const errorText = await msResponse.text();
-            return res.status(msResponse.status).json({ error: 'Fout bij MindStudio Cloud', details: errorText });
+        let msResponse;
+        let lastError = '';
+
+        for (const endpoint of msEndpoints) {
+            try {
+                msResponse = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json',
+                        'User-Agent': 'BrandingMusthavesScanner/1.0'
+                    },
+                    body: JSON.stringify({
+                        appId: agentId, // Nieuwere standaard
+                        agentId: agentId, // Oudere standaard
+                        workflow: 'Main',
+                        variables: {
+                            websiteContent: '',
+                            websiteUrl: websiteUrl,
+                            email: email,
+                            language: language || 'nl'
+                        }
+                    })
+                });
+
+                if (msResponse.ok) break;
+                lastError = await msResponse.text();
+            } catch (e) {
+                lastError = e.message;
+            }
+        }
+
+        if (!msResponse || !msResponse.ok) {
+            return res.status(msResponse ? msResponse.status : 500).json({
+                error: 'Fout bij MindStudio Cloud (Alle endpoints geprobeerd)',
+                details: lastError
+            });
         }
 
         // MindStudio heeft geantwoord! We pakken de uitkomst.
