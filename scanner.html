@@ -150,7 +150,7 @@
 
             <!-- AUDIT RESULTATEN UI (VERBORGEN TOT SUCCES) -->
             <div id="auditResultsUI"
-                style="display:-none; margin-top: 40px; margin-bottom: 60px; text-align: left; background: #fff; padding: 40px; border-radius: 12px; border: 1px solid rgba(33,22,18,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
+                style="display: none; margin-top: 40px; margin-bottom: 60px; text-align: left; background: #fff; padding: 40px; border-radius: 12px; border: 1px solid rgba(33,22,18,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
                 <div style="text-align: center; margin-bottom: 40px;">
                     <span class="label" style="color: var(--amber); display: inline-block; margin-bottom: 12px;">Audit
                         Rapport</span>
@@ -356,13 +356,14 @@
                                         }
 
                                         // We zoeken belangrijke kernwoorden (summary, seo, etc) en transformeren deze naar chique titels!
+                                        // We zoeken zowel Engelse als Nederlandse kopjes
                                         let formattedText = rawText
-                                            .replace(/^\s*summary\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">📋</span> ' + UI_TEXT.summary + '</h4>')
-                                            .replace(/^\s*seo\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">🔍</span> ' + UI_TEXT.seo + '</h4>')
-                                            .replace(/^\s*performance\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">⚡</span> ' + UI_TEXT.performance + '</h4>')
-                                            .replace(/^\s*conversion\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">🎯</span> ' + UI_TEXT.conversion + '</h4>')
-                                            .replace(/^\s*design\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">✨</span> ' + UI_TEXT.design + '</h4>')
-                                            .replace(/^\s*recommendations\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">💡</span> ' + UI_TEXT.recommendations + '</h4>');
+                                            .replace(/^\s*(summary|samenvatting|overzicht)\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">📋</span> ' + UI_TEXT.summary + '</h4>')
+                                            .replace(/^\s*(seo|vindbaarheid)\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">🔍</span> ' + UI_TEXT.seo + '</h4>')
+                                            .replace(/^\s*(performance|snelheid)\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">⚡</span> ' + UI_TEXT.performance + '</h4>')
+                                            .replace(/^\s*(conversion|conversie|sales)\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">🎯</span> ' + UI_TEXT.conversion + '</h4>')
+                                            .replace(/^\s*(design|visuals|uitstraling)\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">✨</span> ' + UI_TEXT.design + '</h4>')
+                                            .replace(/^\s*(recommendations|aanbevelingen|tips|advies)\b/gmi, '<h4 style="font-family: var(--serif); font-size: 22px; color: var(--dark); margin: 32px 0 16px 0; border-bottom: 1px solid rgba(199,185,163,0.3); padding-bottom: 8px;"><span style="font-size: 22px;">💡</span> ' + UI_TEXT.recommendations + '</h4>');
 
                                         // We zoeken lijsten en maken er mooie bullets van, exact zoals de premium JSON-layout!
                                         // Zoek zinsdelen die beginnen met "-" of "*" en formatteer ze
