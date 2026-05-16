@@ -1965,9 +1965,9 @@ footer {
         gap: 8px;
     }
 
-    .btn-hero-primary,
-    .btn-hero-secondary,
-    .btn-outline-dark {
+    .hero-actions .btn-hero-primary,
+    .hero-actions .btn-hero-secondary,
+    .hero-actions .btn-outline-dark {
         padding: 12px 4px !important;
         font-size: 9px !important;
         flex: 1;
@@ -1975,6 +1975,12 @@ footer {
         white-space: nowrap;
         gap: 4px;
         letter-spacing: 0.02em;
+    }
+    
+    .btn-hero-primary,
+    .btn-hero-secondary,
+    .btn-outline-dark {
+        justify-content: center;
     }
 
     .btn-hero-primary svg,
