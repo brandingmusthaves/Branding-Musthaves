@@ -1,20 +1,19 @@
-import glob
 import re
 
-html_files = glob.glob('/Users/julia/Antigravity Branding Musthaves/*.html')
+with open('terms.html', 'r', encoding='utf-8') as f:
+    content = f.read()
 
-for file in html_files:
-    with open(file, 'r', encoding='utf-8') as f:
-        content = f.read()
-    
-    # Replace em-dashes and en-dashes
-    new_content = content.replace('—', '-')
-    
-    # Let's see if there are strings like "- " starting on a new line or something?
-    # "ai streepjes"
-    
-    if new_content != content:
-        with open(file, 'w', encoding='utf-8') as f:
-            f.write(new_content)
-        print(f"Removed em-dashes from {file}")
+# Replace dashes in headings (e.g., "Artikel 1 — ") with "Artikel 1: "
+# Both English and Dutch versions inside data-en and inner HTML
+content = re.sub(r'(Article \d+)\s*—\s*', r'\1: ', content)
+content = re.sub(r'(Artikel \d+)\s*—\s*', r'\1: ', content)
+content = re.sub(r'(Branding Musthaves)\s*—\s*(Julia Leistra)', r'\1: \2', content)
 
+# Replace bullets at the start of a string or after <br>
+# Example: "— Client:" -> "• Client:"
+content = re.sub(r'—\s*', r'• ', content)
+
+with open('terms.html', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("terms.html dashed fixed.")
